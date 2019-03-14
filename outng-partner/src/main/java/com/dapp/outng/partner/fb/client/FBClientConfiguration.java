@@ -13,7 +13,7 @@ public class FBClientConfiguration {
 	
 	@Bean(name="fbRestTemplate")
 	public RestTemplate restTemplate() {
-		String a = "a";
+	
 		
 		
 		return null;
