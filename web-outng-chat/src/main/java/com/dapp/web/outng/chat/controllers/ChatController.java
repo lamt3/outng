@@ -16,12 +16,14 @@ public class ChatController {
 	private static final Logger log = LoggerFactory.getLogger(ChatController.class);
 	 public static final String SECURED_CHAT_SPECIFIC_USER = "/secured/user/queue/specific-user";
 	
-	@Autowired
-	private SimpMessagingTemplate simpMessagingTemplate;
+//	@Autowired
+//	private SimpMessagingTemplate simpMessagingTemplate;
 	
 	@MessageMapping("/secured/chat")
 	public void sendSpeicifc(@Payload ChatMessage message, @Header("simpSessionId") String sessionId) {
-		simpMessagingTemplate.convertAndSendToUser(message.getSendToUserId().toString(),"/secured/user/queue/specific-user", message);
+//		simpMessagingTemplate.convertAndSendToUser(message.getSendToUserId().toString(),"/secured/user/queue/specific-user", message);
+		System.out.println("hi");
+		
 		
 		
 	}

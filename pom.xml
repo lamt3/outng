@@ -31,6 +31,7 @@
 		<module>outng-partner</module>
 		<module>outng-common</module>
 		<module>web-outng-profile</module>
+		<module>web-outng-chat</module>
 	</modules>
 
 
