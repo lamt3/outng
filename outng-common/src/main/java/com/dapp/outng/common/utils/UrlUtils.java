@@ -32,7 +32,7 @@ public class UrlUtils {
 		}
 
 		AtomicInteger count = new AtomicInteger(0);
-		AtomicInteger size = new AtomicInteger(queries.size() - 1);
+		AtomicInteger size = new AtomicInteger(queries.size() - 2);
 
 		queries.forEach((k, v) -> {
 			try {

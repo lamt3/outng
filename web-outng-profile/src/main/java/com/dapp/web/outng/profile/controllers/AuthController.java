@@ -3,26 +3,38 @@ package com.dapp.web.outng.profile.controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.dapp.web.outng.profile.delegates.AuthDelegate;
 
 @RestController
 @RequestMapping("/api/v1/profile/auth")
 public class AuthController {
 	
-	@RequestMapping(value = "/authorize/{provider}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
-	public String authorizeUser(HttpServletRequest httpRequest, HttpServletResponse response) {
+	@Autowired
+	AuthDelegate authDelegate; 
+	
+	
+	
+	
+	
+	@RequestMapping(value = "/user/fb", method = {RequestMethod.GET}, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+	public String authorizeUser(HttpServletRequest httpRequest, HttpServletResponse response, @RequestParam("access_token") String userVerifyFbAccessToken) {
 		// if fb send token request to fb
 		//// use app access token from below + user access token from authroize user endpoint to valid
 		// if verified it is user --> store newly created user into db 
 		// return jwt token to client ot store 
 		// https://stackoverflow.com/questions/5406859/facebook-access-token-server-side-validation-for-iphone-app
+			
+		authDelegate.authorizeUserAndGenerateJWT(userVerifyFbAccessToken);
 		
 		
-		
-		return null;
+		return "Success";
 		
 	}
 	
@@ -35,7 +47,7 @@ public class AuthController {
 	}
 	
 	//return JWT Token in Response
-	@RequestMapping(value = "/signup", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+	@RequestMapping(value = "/signup", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 	public String registerNewUser(HttpServletRequest httpRequest, HttpServletResponse response) {
 		return "hi";
 	}

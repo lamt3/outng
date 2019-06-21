@@ -1,6 +1,7 @@
-package com.dapp.web.outng.services.validator;
+package com.dapp.web.outng.profile.services.validator;
 
 import com.dapp.outng.partner.models.ValidUserResponse;
+
 
 public interface UserValidator {
 	

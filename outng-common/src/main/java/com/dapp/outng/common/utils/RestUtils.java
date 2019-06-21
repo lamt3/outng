@@ -21,12 +21,14 @@ import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import com.dapp.outng.common.configs.RestConfig;
+import com.dapp.outng.common.interceptors.CustomClientHttpRequestInterceptor;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -36,6 +38,13 @@ public class RestUtils {
 
 	public static RestTemplate createRestTemplate(RestConfig restConfig) {
 		RestTemplate restTemplate = new RestTemplate(createHttpRequestFactory(restConfig));
+		restTemplate.setInterceptors(createRequestInterceptors());
+		restTemplate.setMessageConverters(createObjectMapper());
+		return restTemplate;
+	}
+	
+	public static RestTemplate createRestTemplate(int timeOut) {
+		RestTemplate restTemplate = new RestTemplate(createHttpRequestFactory(timeOut));
 		restTemplate.setInterceptors(createRequestInterceptors());
 		restTemplate.setMessageConverters(createObjectMapper());
 		return restTemplate;
@@ -78,10 +87,48 @@ public class RestUtils {
 
 		return bufferingClientHttpRequestFactory;
 	}
+	
+	public static ClientHttpRequestFactory createHttpRequestFactory(int timeOut) {
+
+		// int timeout = restConfig.getTimeout();
+		// HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new
+		// HttpComponentsClientHttpRequestFactory();
+		// clientHttpRequestFactory.setConnectTimeout(timeout);
+
+		RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(timeOut)
+				.setSocketTimeout(5000).build();
+
+		SocketConfig.Builder socketConfigBuilder = SocketConfig.custom().setSoTimeout(5000).setTcpNoDelay(true)
+				.setSoLinger(0).setSoKeepAlive(true);
+
+		SocketConfig socketConfig = socketConfigBuilder.build();
+
+		Registry<ConnectionSocketFactory> schemeRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
+				.register("https", SSLConnectionSocketFactory.getSocketFactory())
+				.register("http", PlainConnectionSocketFactory.getSocketFactory()).build();
+
+		PoolingHttpClientConnectionManager clientConnectionManager = new PoolingHttpClientConnectionManager(
+				schemeRegistry);
+		clientConnectionManager.setMaxTotal(50);
+		clientConnectionManager.setDefaultMaxPerRoute(50);
+		clientConnectionManager.setValidateAfterInactivity(50);
+
+		HttpClientBuilder builder = HttpClientBuilder.create().setConnectionManager(clientConnectionManager)
+				.setDefaultRequestConfig(requestConfig).setDefaultSocketConfig(socketConfig)
+				.setRetryHandler(new DefaultHttpRequestRetryHandler(2, false));
+
+		HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory(
+				builder.build());
+
+		BufferingClientHttpRequestFactory bufferingClientHttpRequestFactory = new BufferingClientHttpRequestFactory(
+				httpFactory);
+
+		return bufferingClientHttpRequestFactory;
+	}
 
 	public static List<ClientHttpRequestInterceptor> createRequestInterceptors() {
 		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
-//		interceptors.add(new CustomClientHttpRequestInterceptor());
+		interceptors.add(new CustomClientHttpRequestInterceptor());
 		return interceptors;
 
 	}
@@ -91,7 +138,7 @@ public class RestUtils {
 		// Add message converter to convert snake casing
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
-		mapper.setPropertyNamingStrategy(new PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy());
+		mapper.setPropertyNamingStrategy(new PropertyNamingStrategy.LowerCaseStrategy());
 
 		// Add the Jackson Message converter
 		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
@@ -101,6 +148,7 @@ public class RestUtils {
 		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
 		messageConverters.add(converter);
 		messageConverters.add(new StringHttpMessageConverter());
+		messageConverters.add(new FormHttpMessageConverter());
 		return messageConverters;
 	}
 
