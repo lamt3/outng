@@ -7,7 +7,7 @@ import com.dapp.outng.partner.fb.client.FBClient;
 import com.dapp.outng.partner.fb.models.FBAppAccessToken;
 import com.dapp.outng.partner.models.ValidUserResponse;
 
-@Component
+@Component("FbUserValidator")
 public class FbUserValidator implements UserValidator {
 
 	@Autowired
