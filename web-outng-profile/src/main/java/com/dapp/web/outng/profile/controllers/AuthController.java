@@ -23,7 +23,6 @@ public class AuthController {
 	
 	
 	
-	
 	@RequestMapping(value = "/user", method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 	public String authorizeUser(HttpServletRequest httpRequest, HttpServletResponse response, @RequestBody UserAuthRequest userAuthRequest) {
 		// if fb send token request to fb

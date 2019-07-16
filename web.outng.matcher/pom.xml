@@ -3,17 +3,21 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<!-- <parent> <groupId>com.dapp</groupId> <artifactId>outng-parent</artifactId> 
+		<version>1.0.0-SNAPSHOT</version> </parent> -->
+	<!-- <parent> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-parent</artifactId> 
+		<version>2.0.4.RELEASE</version> </parent> -->
 	<parent>
 		<groupId>com.dapp</groupId>
 		<artifactId>outng-parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>web-outng-chat</artifactId>
 
+	<artifactId>web-outng-matcher</artifactId>
 	<packaging>jar</packaging>
 
-	<name>web-outng-chat</name>
+	<name>web-outng-matcher</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -24,10 +28,8 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<version.spring.boot>1.5.6.RELEASE</version.spring.boot>
 		<version.slf4j>1.7.25</version.slf4j>
-		<docker.image.prefix>lamt3/outng-chat-image</docker.image.prefix>
+		<docker.image.prefix>lamt3/outng-matcher-image</docker.image.prefix>
 	</properties>
-
-
 
 	<build>
 		<plugins>
@@ -35,7 +37,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.dapp.web.outng.chat.ChatApp</mainClass>
+					<mainClass>com.dapp.web.outng.matcher.MatcherApp</mainClass>
 					<addResources>true</addResources>
 				</configuration>
 				<executions>
@@ -71,13 +73,6 @@
 
 				</configuration>
 			</plugin>
-			<!-- front end plugin -->
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-resources-plugin</artifactId> 
-				<executions> <execution> <id>copy-resources</id> <phase>validate</phase> 
-				<goals> <goal>copy-resources</goal> </goals> <configuration> <outputDirectory>${basedir}/target/classes/static</outputDirectory> 
-				<resources> <resource> <directory>${main.basedir}/onboarding-app/build</directory> 
-				<filtering>false</filtering> </resource> </resources> </configuration> </execution> 
-				</executions> </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -122,38 +117,83 @@
 		</plugins>
 	</build>
 
-
+	<!-- <dependencies> <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> 
+		<version>3.8.1</version> <scope>test</scope> </dependency> <dependency> <groupId>javax.servlet</groupId> 
+		<artifactId>javax.servlet-api</artifactId> <version>4.0.0</version> <scope>provided</scope> 
+		</dependency> <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId> 
+		<version>${version.slf4j}</version> </dependency> <dependency> <groupId>org.springframework.boot</groupId> 
+		<artifactId>spring-boot-starter-webflux</artifactId> <version>2.1.2.RELEASE</version> 
+		</dependency> <dependency> <groupId>javax.websocket</groupId> <artifactId>javax.websocket-api</artifactId> 
+		<version>1.1</version> </dependency> <dependency> <groupId>org.springframework.boot</groupId> 
+		<artifactId>spring-boot-starter-test</artifactId> <version>1.5.10.RELEASE</version> 
+		<scope>test</scope> </dependency> <dependency> <groupId>commons-lang</groupId> 
+		<artifactId>commons-lang</artifactId> <version>2.6</version> <scope>test</scope> 
+		</dependency> </dependencies> -->
 
 	<dependencies>
+		<!-- Boot -->
 		<dependency>
-			<groupId>com.dapp</groupId>
-			<artifactId>outng-partner</artifactId>
-			<version>${project.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+
+		<!-- Tooling -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>com.dapp</groupId>
-			<artifactId>outng-common</artifactId>
-			<version>${project.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Websocket -->
+		<dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.dapp</groupId>
-			<artifactId>outng-profile</artifactId>
-			<version>${project.version}</version>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-assert</artifactId>
+			<version>1.4</version>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-websocket</artifactId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-aop</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-amqp</artifactId>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>5.0.1.RELEASE</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-reactor-netty</artifactId>
-		</dependency>
-
-
 	</dependencies>
 </project>
