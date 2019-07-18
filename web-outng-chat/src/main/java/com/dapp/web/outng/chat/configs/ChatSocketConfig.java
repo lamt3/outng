@@ -23,28 +23,31 @@ public class ChatSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
-		config.enableSimpleBroker("/secured/user/queue/specific-user");
-		config.setApplicationDestinationPrefixes("/spring-security-mvc-socket");
-		config.setUserDestinationPrefix("/secured/user");
+		config.enableSimpleBroker("/topic");
+//		config.setApplicationDestinationPrefixes("/app");
+//		config.setUserDestinationPrefix("/user");
 	}
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		 registry.addEndpoint("/secured/room").setHandshakeHandler(new DefaultHandshakeHandler() {
-		    @SuppressWarnings("unused")
-			public boolean beforeHandshake(
-		        ServerHttpRequest request, 
-		        ServerHttpResponse response, 
-		        WebSocketHandler wsHandler, Map<String,String> attributes) throws Exception {
-		            if (request instanceof ServletServerHttpRequest) {
-		                ServletServerHttpRequest servletRequest
-		                 = (ServletServerHttpRequest) request;
-		                HttpSession session = servletRequest
-		                  .getServletRequest().getSession();
-		                attributes.put("sessionId", session.getId());
-		            }
-		                return true;
-		        }}).withSockJS();
+//		 registry.addEndpoint("/matcher").setHandshakeHandler(new DefaultHandshakeHandler() {
+//		    @SuppressWarnings("unused")
+//			public boolean beforeHandshake(
+//		        ServerHttpRequest request, 
+//		        ServerHttpResponse response, 
+//		        WebSocketHandler wsHandler, Map<String,String> attributes) throws Exception {
+//		            if (request instanceof ServletServerHttpRequest) {
+//		                ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
+//		                HttpSession session = servletRequest.getServletRequest().getSession();
+//		                attributes.put("sessionId", session.getId());
+//		            }
+//		            return true;
+//		        }
+//		    }
+//		 ).withSockJS();
+		registry
+        .addEndpoint("/router")
+        .setAllowedOrigins("*");
 		 
 	}
 
