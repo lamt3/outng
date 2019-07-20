@@ -1,0 +1,198 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.dapp</groupId>
+		<artifactId>outng-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+
+	<artifactId>web-outng-orchestrator</artifactId>
+	<packaging>jar</packaging>
+
+	<name>web-outng-orchestrator</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<debug.port>8086</debug.port>
+		<debug.suspend>n</debug.suspend>
+		<main.basedir>${project.parent.basedir}</main.basedir>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<version.spring.boot>1.5.6.RELEASE</version.spring.boot>
+		<version.slf4j>1.7.25</version.slf4j>
+		<docker.image.prefix>lamt3/outng-profile-image</docker.image.prefix>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.dapp.web.outng.orchestrator.ProfileApp</mainClass>
+					<addResources>true</addResources>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<configuration>
+					<skipDockerBuild>false</skipDockerBuild>
+					<imageName>${docker.image.prefix}:${project.version}</imageName>
+					<!-- <pushImage>true</pushImage> -->
+					<forceTags>true</forceTags>
+					<!-- <imageTags> <imageTag>${project.version}</imageTag> </imageTags> -->
+
+					<dockerDirectory>${basedir}/src/main/docker</dockerDirectory>
+					<!-- <serverId>docker-hub</serverId> <registryUrl>https://index.docker.io/v1/</registryUrl> -->
+					<!-- <repository>lamt3/bazaar-vendors-image</repository> -->
+					<useConfigFile>true</useConfigFile>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+
+					</resources>
+
+				</configuration>
+			</plugin>
+			<!-- front end plugin -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-resources-plugin</artifactId> 
+				<executions> <execution> <id>copy-resources</id> <phase>validate</phase> 
+				<goals> <goal>copy-resources</goal> </goals> <configuration> <outputDirectory>${basedir}/target/classes/static</outputDirectory> 
+				<resources> <resource> <directory>${main.basedir}/onboarding-app/build</directory> 
+				<filtering>false</filtering> </resource> </resources> </configuration> </execution> 
+				</executions> </plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<compilerId>javac-with-errorprone</compilerId>
+					<forceJavacCompilerUse>true</forceJavacCompilerUse>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<showWarnings>true</showWarnings>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.plexus</groupId>
+						<artifactId>plexus-compiler-javac-errorprone</artifactId>
+						<version>2.8.1</version>
+					</dependency>
+					<dependency>
+						<groupId>com.google.errorprone</groupId>
+						<artifactId>error_prone_core</artifactId>
+						<version>2.0.19</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<configuration>
+					<minimumTokens>50</minimumTokens>
+					<targetJdk>${java.version}</targetJdk>
+					<failOnViolation>true</failOnViolation>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>cpd</goal>
+							<goal>cpd-check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>com.dapp</groupId>
+			<artifactId>outng-partner</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dapp</groupId>
+			<artifactId>outng-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dapp</groupId>
+			<artifactId>outng-profile</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dapp</groupId>
+			<artifactId>outng-messaging</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			</dependency>
+		<!-- JWT library -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.0</version>
+		</dependency>
+
+		<!-- Spring Depedencies -->
+
+
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-clients</artifactId>
+			<version>1.1.0</version>
+			<exclusions>
+				<!-- <exclusion> <artifactId>logback-classic</artifactId> <groupId>ch.qos.logback</groupId> 
+					</exclusion> -->
+				<exclusion>
+					<artifactId>log4j-over-slf4j</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+
+		<!-- JSON -->
+		<!-- <dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-annotations</artifactId> 
+			<version>2.6.0</version> </dependency> <dependency> <groupId>com.fasterxml.jackson.core</groupId> 
+			<artifactId>jackson-core</artifactId> <version>2.6.0</version> </dependency> 
+			<dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-databind</artifactId> 
+			<version>2.8.11</version> </dependency> -->
+
+	</dependencies>
+</project>

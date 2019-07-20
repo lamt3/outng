@@ -41,8 +41,8 @@
 		<module>outng-profile</module>
 		<module>outng-partner</module>
 		<module>outng-common</module>
-		<module>web-outng-profile</module>
-		<module>web-outng-matcher</module>
+		<module>web-outng-orchestrator</module>
+		<module>web-outng-async</module>
 	</modules>
 
 
