@@ -1,4 +1,4 @@
-package com.dapp.outng.profile;
+package com.dapp.outng.matcher;
 
 /**
  * Hello world!

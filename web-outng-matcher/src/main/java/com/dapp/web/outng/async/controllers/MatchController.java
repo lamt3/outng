@@ -1,4 +1,4 @@
-package com.dapp.web.outng.matcher.controllers;
+package com.dapp.web.outng.async.controllers;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dapp.web.outng.matcher.models.MatchedUser;
-import com.dapp.web.outng.matcher.models.UserMatch;
+import com.dapp.web.outng.async.models.MatchedUser;
+import com.dapp.web.outng.async.models.UserMatch;
 
 @RestController
 @RequestMapping("/api/v1/match/")

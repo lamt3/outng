@@ -1,4 +1,4 @@
-package com.dapp.web.outng.matcher.models;
+package com.dapp.web.outng.async.models;
 
 public class UserMatch {
 	String userId;
