@@ -46,6 +46,18 @@
 	</modules>
 
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>software.amazon.awssdk</groupId>
+				<artifactId>bom</artifactId>
+				<version>2.7.8</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -83,6 +95,19 @@
 
 
 	<dependencies>
+
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>ec2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>s3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>dynamodb</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.shekhargulati</groupId>
 			<artifactId>strman</artifactId>
@@ -100,7 +125,12 @@
 			<version>1.10</version>
 		</dependency>
 
+		<!-- <dependency> <groupId>com.amazonaws</groupId> <artifactId>aws-java-sdk-dynamodb</artifactId> 
+			<version>1.11.34</version> </dependency> <dependency> <groupId>com.github.derjust</groupId> 
+			<artifactId>spring-data-dynamodb</artifactId> <version>4.3.1</version> </dependency> -->
+
 		<dependency>
+
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<exclusions>

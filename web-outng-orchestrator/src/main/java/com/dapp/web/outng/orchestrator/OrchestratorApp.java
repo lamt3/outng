@@ -6,9 +6,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProfileApp{
+public class OrchestratorApp{
 	public static void main(final String... args) {
-		final SpringApplication app = new SpringApplication(ProfileApp.class);
+		final SpringApplication app = new SpringApplication(OrchestratorApp.class);
 		app.setDefaultProperties(Collections.singletonMap("server.port", (Object)"8086"));
 		app.run(args);
 	}

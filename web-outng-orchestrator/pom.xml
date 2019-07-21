@@ -129,19 +129,14 @@
 		</dependency>
 		<dependency>
 			<groupId>com.dapp</groupId>
-			<artifactId>outng-common</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.dapp</groupId>
 			<artifactId>outng-profile</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.dapp</groupId>
 			<artifactId>outng-messaging</artifactId>
 			<version>${project.version}</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

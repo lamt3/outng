@@ -25,5 +25,10 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.dapp</groupId>
+			<artifactId>outng-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -21,33 +21,18 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>software.amazon.awssdk</groupId>
-				<artifactId>bom</artifactId>
-				<version>2.5.25</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
+			
 		</dependencies>
 	</dependencyManagement>
 
 	<dependencies>
+		
 		<dependency>
-			<artifactId>auth</artifactId>
-			<groupId>software.amazon.awssdk</groupId>
+			<groupId> org.elasticsearch.client</groupId>
+			<artifactId>elasticsearch-rest-high-level-client</artifactId>
+			<version>LATEST</version>
 		</dependency>
-		<dependency>
-			<artifactId>aws-core</artifactId>
-			<groupId>software.amazon.awssdk</groupId>
-		</dependency>
-		<dependency>
-			<groupId>software.amazon.awssdk</groupId>
-			<artifactId>auth</artifactId>
-		</dependency>
-		<dependency>
-			<artifactId>dynamodb</artifactId>
-			<groupId>software.amazon.awssdk</groupId>
-		</dependency>
+
 		<!-- <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> 
 			<version>3.8.1</version> <scope>test</scope> </dependency> JWT library <dependency> 
 			<groupId>io.jsonwebtoken</groupId> <artifactId>jjwt</artifactId> <version>0.9.0</version> 
