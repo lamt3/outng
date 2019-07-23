@@ -33,7 +33,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.dapp.web.outng.orchestrator.ProfileApp</mainClass>
+					<mainClass>com.dapp.web.outng.orchestrator.OrchestratorApp</mainClass>
 					<addResources>true</addResources>
 				</configuration>
 				<executions>
@@ -69,13 +69,6 @@
 
 				</configuration>
 			</plugin>
-			<!-- front end plugin -->
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-resources-plugin</artifactId> 
-				<executions> <execution> <id>copy-resources</id> <phase>validate</phase> 
-				<goals> <goal>copy-resources</goal> </goals> <configuration> <outputDirectory>${basedir}/target/classes/static</outputDirectory> 
-				<resources> <resource> <directory>${main.basedir}/onboarding-app/build</directory> 
-				<filtering>false</filtering> </resource> </resources> </configuration> </execution> 
-				</executions> </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -130,6 +123,11 @@
 		<dependency>
 			<groupId>com.dapp</groupId>
 			<artifactId>outng-profile</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dapp</groupId>
+			<artifactId>outng-recommendations</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<!-- <dependency>

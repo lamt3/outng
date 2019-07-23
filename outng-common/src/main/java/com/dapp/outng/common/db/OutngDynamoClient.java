@@ -18,7 +18,7 @@ public class OutngDynamoClient {
 //	@Value("${cloud.aws.credentials.secretKey}")
 //	private String secretKey;
 
-	private DynamoDbClient dynamoDbClient;
+	public DynamoDbClient dynamoDbClient;
 
 	@PostConstruct
 	public void initialize() {
@@ -28,6 +28,7 @@ public class OutngDynamoClient {
 		DynamoDbClient client = DynamoDbClient.builder().endpointOverride(URI.create("http://localhost:8000")).build();
 	
 		this.dynamoDbClient = client;
+		
 	}
 
 	@PreDestroy
