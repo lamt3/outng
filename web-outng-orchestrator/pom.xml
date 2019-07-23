@@ -24,7 +24,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<version.spring.boot>1.5.6.RELEASE</version.spring.boot>
 		<version.slf4j>1.7.25</version.slf4j>
-		<docker.image.prefix>lamt3/outng-profile-image</docker.image.prefix>
+		<docker.image.prefix>outng/outng-orchestrator-image</docker.image.prefix>
 	</properties>
 
 	<build>
