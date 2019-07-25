@@ -130,11 +130,17 @@
 			<artifactId>outng-recommendations</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.dapp</groupId>
+			<artifactId>outng-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<!-- <dependency>
 			<groupId>com.dapp</groupId>
 			<artifactId>outng-messaging</artifactId>
 			<version>${project.version}</version>
 		</dependency> -->
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

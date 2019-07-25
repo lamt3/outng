@@ -50,7 +50,7 @@ public class AdminController {
 		return "Success";
 	}
 	
-	@RequestMapping(value = "user/table", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+	@RequestMapping(value = "user/table1", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 	public String createTable2(HttpServletRequest httpRequest, HttpServletResponse response, @RequestBody Profile profile) {
 		DynamoDBMapper mapper = new DynamoDBMapper(client);
 		CreateTableRequest req = mapper.generateCreateTableRequest(Profile.class);
