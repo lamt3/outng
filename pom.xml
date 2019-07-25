@@ -39,16 +39,27 @@
 
 
 	<modules>
-		<module>outng-profile</module>
-		<module>outng-partner</module>
 		<module>outng-common</module>
+		<module>outng-partner</module>
+		<module>outng-messaging</module>
+		<module>outng-profile</module>
+		<module>outng-matcher</module>
+		<module>outng-recommendations</module>
 		<module>web-outng-orchestrator</module>
 		<module>web-outng-async</module>
+		<module>web-outng-chat</module>
 	</modules>
 
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>com.amazonaws</groupId>
+				<artifactId>aws-java-sdk-bom</artifactId>
+				<version>1.11.428</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 			<dependency>
 				<groupId>software.amazon.awssdk</groupId>
 				<artifactId>bom</artifactId>
@@ -96,7 +107,22 @@
 
 
 	<dependencies>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.5</version>
+		</dependency>
 
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>7.2.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-dynamodb</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>software.amazon.awssdk</groupId>
 			<artifactId>ec2</artifactId>

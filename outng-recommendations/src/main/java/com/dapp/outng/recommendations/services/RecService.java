@@ -1,12 +1,13 @@
 package com.dapp.outng.recommendations.services;
 
-import java.util.List;
+import org.elasticsearch.client.RestHighLevelClient;
 
 public class RecService {
 	
+	private RestHighLevelClient searchClient;
 	
-	public List<String> getSeenIds(String userId){
-		return null;
+	public void getUserRecommendations() {
+		
 	}
 	
 

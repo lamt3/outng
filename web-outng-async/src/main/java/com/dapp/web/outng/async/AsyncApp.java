@@ -6,9 +6,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MatcherApp {
+public class AsyncApp {
 	public static void main(final String... args) {
-		final SpringApplication app = new SpringApplication(MatcherApp.class);
+		final SpringApplication app = new SpringApplication(AsyncApp.class);
 		app.setDefaultProperties(Collections.singletonMap("server.port", (Object)"8088"));
 		app.run(args);
 //		SpringApplication.run(MatcherApp.class, args);

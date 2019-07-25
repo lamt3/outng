@@ -21,14 +21,14 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<debug.port>8087</debug.port>
+		<debug.port>8088</debug.port>
 		<debug.suspend>n</debug.suspend>
 		<main.basedir>${project.parent.basedir}</main.basedir>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<version.spring.boot>1.5.6.RELEASE</version.spring.boot>
 		<version.slf4j>1.7.25</version.slf4j>
-		<docker.image.prefix>lamt3/outng-matcher-image</docker.image.prefix>
+		<docker.image.prefix>outng/outng-async-image</docker.image.prefix>
 	</properties>
 
 	<build>
@@ -37,7 +37,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.dapp.web.outng.matcher.MatcherApp</mainClass>
+					<mainClass>com.dapp.web.outng.async.AsyncApp</mainClass>
 					<addResources>true</addResources>
 				</configuration>
 				<executions>

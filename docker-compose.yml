@@ -1,0 +1,29 @@
+version: '3'
+
+networks:
+  somenetwork:
+
+services:
+   dynamo:
+    image: "dwmkerr/dynamodb"
+    volumes:
+      - ./.data/dynamodb:/dynamodb_local_db
+    ports:
+      - "8000:8000"
+   outng-orchestrator-app:
+    image: outng-orchestrator-image
+    ports:
+    - "8086:8086"
+   outng-async-app:
+    image: outng-async-image
+    ports:
+    - "8088:8088"
+    links:
+    - outng-orchestrator-app
+   outng-chat-app:
+    image: outng-chat-image
+    ports:
+    - "8087:8087"
+    links:
+    - outng-orchestrator-app
+    - outng-async-app
