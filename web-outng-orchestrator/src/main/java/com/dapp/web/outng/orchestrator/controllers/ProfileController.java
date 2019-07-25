@@ -14,16 +14,9 @@ import com.dapp.outng.common.db.OutngDynamoClient;
 import com.dapp.outng.recommendations.services.SearchCreationService;
 
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
-import software.amazon.awssdk.services.dynamodb.model.AttributeDefinition;
-import software.amazon.awssdk.services.dynamodb.model.CreateTableRequest;
-import software.amazon.awssdk.services.dynamodb.model.CreateTableResponse;
-import software.amazon.awssdk.services.dynamodb.model.KeySchemaElement;
-import software.amazon.awssdk.services.dynamodb.model.KeyType;
-import software.amazon.awssdk.services.dynamodb.model.ProvisionedThroughput;
-import software.amazon.awssdk.services.dynamodb.model.ScalarAttributeType;
 
 @RestController
-@RequestMapping("/api/v1/profile/")
+@RequestMapping("/api/v1/user/")
 public class ProfileController {
 
 	@Autowired
@@ -31,28 +24,16 @@ public class ProfileController {
 	@Autowired
 	private SearchCreationService a;
 	
-	@RequestMapping(value = "/user", method = {RequestMethod.GET}, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
-	public String authorizeUser(HttpServletRequest httpRequest, HttpServletResponse response) {
+	
+	
+	
+	@RequestMapping(value = "/signup", method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+	public String signUpUser(HttpServletRequest httpRequest, HttpServletResponse response) {
 		
-		CreateTableRequest request = CreateTableRequest.builder()
-				.attributeDefinitions(AttributeDefinition.builder()
-						.attributeName("Name")
-						.attributeType(ScalarAttributeType.S)
-						.build())
-				.keySchema(KeySchemaElement.builder()
-						.attributeName("Name")
-						.keyType(KeyType.HASH)
-						.build())
-				.provisionedThroughput(ProvisionedThroughput.builder()
-						.readCapacityUnits(new Long(10))
-						.writeCapacityUnits(new Long(10))
-						.build())
-				.tableName("User_Test")
-				.build();
 		
 		DynamoDbClient ddb = c.dynamoDbClient;
-		CreateTableResponse resp = ddb.createTable(request);
-		System.out.println(resp.tableDescription().tableName());
+
+
 		
 		return "Success";
 		

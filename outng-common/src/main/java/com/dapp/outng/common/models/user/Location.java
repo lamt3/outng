@@ -1,11 +1,12 @@
-package com.dapp.outng.profile.models;
+package com.dapp.outng.common.models.user;
 
 public class Location {
 	String city;
 	String country;
 	String zipCode; 
-	Double latitude; 
-	Double longitude;
+	double latitude; 
+	double longitude;
+	
 	public String getCity() {
 		return city;
 	}

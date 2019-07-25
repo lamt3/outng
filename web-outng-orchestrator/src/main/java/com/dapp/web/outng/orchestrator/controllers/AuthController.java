@@ -20,9 +20,6 @@ public class AuthController {
 	@Autowired
 	AuthDelegate authDelegate; 
 	
-	
-	
-	
 	@RequestMapping(value = "/user", method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 	public String authorizeUser(HttpServletRequest httpRequest, HttpServletResponse response, @RequestBody UserAuthRequest userAuthRequest) {
 		// if fb send token request to fb
@@ -38,35 +35,5 @@ public class AuthController {
 		
 	}
 	
-	@RequestMapping(value = "/generate/{provider}/appAccessToken", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
-	public String generateAppAcessToken(HttpServletRequest httpRequest, HttpServletResponse response) {
-		// generate app access token store it in db
 	
-		return null;
-		
-	}
-	
-	//return JWT Token in Response
-	@RequestMapping(value = "/signup", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
-	public String registerNewUser(HttpServletRequest httpRequest, HttpServletResponse response) {
-		return "hi";
-	}
-	
-	
-	//return JWT Token in Response
-	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
-	public String login(HttpServletRequest httpRequest, HttpServletResponse response) {
-		return "hi";
-	}
-	
-	@RequestMapping(value = "/logout", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
-	public String logout(HttpServletRequest httpRequest, HttpServletResponse response) {
-		return "hi";
-	}
-	
-	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
-	public String delete(HttpServletRequest httpRequest, HttpServletResponse response) {
-		return "hi";
-	}
-
 }

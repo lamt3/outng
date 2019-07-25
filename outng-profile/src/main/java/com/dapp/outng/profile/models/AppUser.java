@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.dapp.outng.common.models.user.Location;
+
 public class AppUser {
 	
 	private Long userId;
@@ -16,7 +18,9 @@ public class AppUser {
 	private String clientUserId;
 	private String clientUserType;
 	private String gender;
-	private Map<String, List<String>> interests;
+	private String lookingFor;
+	private String seeking; 
+	private List<String> interests;
 	
 	public AppUser(String clientUserId, String clientUserType) {
 		this.clientUserId = clientUserId;

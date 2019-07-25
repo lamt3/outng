@@ -11,7 +11,7 @@ import com.dapp.web.outng.orchestrator.factories.UserValidatorFactory;
 
 @Configuration
 @ComponentScan("com.dapp.outng")
-@Import({FBClientConfiguration.class, SearchConfig.class})
+@Import({FBClientConfiguration.class})
 public class AppConfig {
 	
 	@Bean
