@@ -13,6 +13,7 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -67,5 +68,19 @@ public class SearchCreationService {
 			e.printStackTrace();
 		}
 	}
+	
+	public void indexOutngUser(String userPayload, String userId) {
+		IndexRequest request = new IndexRequest("user_test3"); 
+		request.id(userId); 
+		request.source(userPayload, XContentType.JSON);
+		try {
+			IndexResponse indexResponse = searchClient.index(request, RequestOptions.DEFAULT);
+			System.out.println(indexResponse.getIndex());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 
 }

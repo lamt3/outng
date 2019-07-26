@@ -1,10 +1,19 @@
 package com.dapp.outng.common.models.user;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
+
+@DynamoDBDocument
 public class Location {
+	@DynamoDBAttribute
 	String city;
+	@DynamoDBAttribute
 	String country;
+	@DynamoDBAttribute
 	String zipCode; 
+	@DynamoDBAttribute
 	double latitude; 
+	@DynamoDBAttribute
 	double longitude;
 	
 	public String getCity() {

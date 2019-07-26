@@ -22,6 +22,8 @@ public class AuthDelegateImpl implements AuthDelegate {
 		ValidUserResponse validUser = userValidator.validateUserAccessToken(userAuthRequest.getClientAuthAccessToken());
 
 		if (validUser != null && validUser.isValidUser()) {
+			
+			
 			// check if new user
 			// if new user add to db and send new user response back to client to kick
 			// him/her into sign up flow

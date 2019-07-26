@@ -8,6 +8,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
+
 @DynamoDBTable(tableName="User_Test")
 public class OutngUser {
 	
@@ -16,17 +17,136 @@ public class OutngUser {
 	private String userId;
 	@DynamoDBAttribute(attributeName = "name")
 	private String name;
+	@DynamoDBAttribute(attributeName = "birthDate")
 	private String birthDate;
+	private String age;
+	@DynamoDBAttribute(attributeName = "location")
 	private Location location; 
 	@DynamoDBIndexHashKey(globalSecondaryIndexName="clientUserId")
 	private String clientUserId;
+	@DynamoDBAttribute(attributeName = "clientUserType")
 	private String clientUserType;
+	@DynamoDBAttribute(attributeName = "gender")
 	private String gender;
+	@DynamoDBAttribute(attributeName = "lookingFor")
 	private String lookingFor;
+	@DynamoDBAttribute(attributeName = "situation")
 	private List<String> situation; 
+	@DynamoDBAttribute(attributeName = "interests")
 	private List<String> interests;
+	@DynamoDBAttribute(attributeName = "preference")
 	private UserPreference preference;
+	@DynamoDBAttribute(attributeName = "userDetail")
 	private UserDetail userDetail;
+	
+	public OutngUser() {
+		
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public String getClientUserId() {
+		return clientUserId;
+	}
+
+	public void setClientUserId(String clientUserId) {
+		this.clientUserId = clientUserId;
+	}
+
+	public String getClientUserType() {
+		return clientUserType;
+	}
+
+	public void setClientUserType(String clientUserType) {
+		this.clientUserType = clientUserType;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getLookingFor() {
+		return lookingFor;
+	}
+
+	public void setLookingFor(String lookingFor) {
+		this.lookingFor = lookingFor;
+	}
+
+	public List<String> getSituation() {
+		return situation;
+	}
+
+	public void setSituation(List<String> situation) {
+		this.situation = situation;
+	}
+
+	public List<String> getInterests() {
+		return interests;
+	}
+
+	public void setInterests(List<String> interests) {
+		this.interests = interests;
+	}
+
+	public UserPreference getPreference() {
+		return preference;
+	}
+
+	public void setPreference(UserPreference preference) {
+		this.preference = preference;
+	}
+
+	public UserDetail getUserDetail() {
+		return userDetail;
+	}
+
+	public void setUserDetail(UserDetail userDetail) {
+		this.userDetail = userDetail;
+	}
+
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
+	}
+	
 	
 	
 	
