@@ -1,11 +1,15 @@
 package com.dapp.outng.common.security;
 
+import com.dapp.outng.common.exception.OutngRuntimeException;
+import com.dapp.outng.common.http.SecurityConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -33,7 +37,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             if (StringUtils.isNotEmpty(userId)) {
                 Authentication authentication = new UsernamePasswordAuthenticationToken(userId, null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                throw new OutngRuntimeException(HttpStatus.UNAUTHORIZED, SecurityConstants.USER_UNAUTHORIZED_MESSAGE);
             }
+        } else {
+            throw new OutngRuntimeException(HttpStatus.UNAUTHORIZED, SecurityConstants.USER_UNAUTHORIZED_MESSAGE);
         }
 
         filterChain.doFilter(request, response);
