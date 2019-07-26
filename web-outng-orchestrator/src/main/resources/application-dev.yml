@@ -1,0 +1,7 @@
+
+spring:
+  profiles: dev
+
+jwt-configs:
+  jwtSecret: "0ADBDDE5-EC33-4C59-B07A-ACA90BAC864E"
+  jwtExpirationInMs: 1209600000

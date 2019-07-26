@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/rec")
+@RequestMapping("/services/v1/rec")
 public class RecommendationController {
 
 	@RequestMapping(value = "/location/{locationId}", method = {RequestMethod.GET}, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
@@ -19,7 +19,6 @@ public class RecommendationController {
 		
 		
 		return "Success";
-		
 	}
 	
 }
