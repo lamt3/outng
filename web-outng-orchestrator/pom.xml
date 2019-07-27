@@ -20,10 +20,6 @@
 		<debug.port>8086</debug.port>
 		<debug.suspend>n</debug.suspend>
 		<main.basedir>${project.parent.basedir}</main.basedir>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<version.spring.boot>1.5.6.RELEASE</version.spring.boot>
-		<version.slf4j>1.7.25</version.slf4j>
 		<docker.image.prefix>outng/outng-orchestrator-image</docker.image.prefix>
 	</properties>
 
@@ -72,44 +68,22 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
 				<configuration>
-					<compilerId>javac-with-errorprone</compilerId>
-					<forceJavacCompilerUse>true</forceJavacCompilerUse>
+					<!-- <compilerId>javac-with-errorprone</compilerId> -->
+					<!-- <forceJavacCompilerUse>true</forceJavacCompilerUse> -->
 					<source>${java.version}</source>
 					<target>${java.version}</target>
+					<version>11</version>
 					<showWarnings>true</showWarnings>
 				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.codehaus.plexus</groupId>
-						<artifactId>plexus-compiler-javac-errorprone</artifactId>
-						<version>2.8.1</version>
-					</dependency>
-					<dependency>
-						<groupId>com.google.errorprone</groupId>
-						<artifactId>error_prone_core</artifactId>
-						<version>2.0.19</version>
-					</dependency>
-				</dependencies>
+				
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-pmd-plugin</artifactId>
-				<configuration>
-					<minimumTokens>50</minimumTokens>
-					<targetJdk>${java.version}</targetJdk>
-					<failOnViolation>true</failOnViolation>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>verify</phase>
-						<goals>
-							<goal>cpd</goal>
-							<goal>cpd-check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-pmd-plugin</artifactId> 
+				<configuration> <minimumTokens>50</minimumTokens> <targetJdk>${java.version}</targetJdk> 
+				<failOnViolation>true</failOnViolation> </configuration> <executions> <execution> 
+				<phase>verify</phase> <goals> <goal>cpd</goal> <goal>cpd-check</goal> </goals> 
+				</execution> </executions> </plugin> -->
 		</plugins>
 	</build>
 
@@ -140,7 +114,7 @@
 			<artifactId>outng-messaging</artifactId>
 			<version>${project.version}</version>
 		</dependency> -->
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -154,7 +128,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			</dependency>
+		</dependency>
 		<!-- JWT library -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -179,7 +153,7 @@
 			</exclusions>
 
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

@@ -14,7 +14,7 @@ import com.dapp.web.outng.orchestrator.delegates.AuthDelegate;
 import com.dapp.web.outng.orchestrator.models.request.UserAuthRequest;
 
 @RestController
-@RequestMapping("/api/v1/profile/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 	
 	@Autowired

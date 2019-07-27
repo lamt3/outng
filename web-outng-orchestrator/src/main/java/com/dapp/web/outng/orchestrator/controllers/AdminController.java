@@ -82,7 +82,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "user/by_clientId/{clientId}", method = { RequestMethod.GET }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 	public ResponseEntity <OutngUser> findUserByClientId(HttpServletRequest httpRequest, HttpServletResponse response, @PathVariable String clientId) {
-		OutngUser user = userService.getUserByClientId(clientId);
+		OutngUser user = userService.getUserByUserPartnerId(clientId);
 		return ResponseEntity.ok().body(user);
 	}
 	

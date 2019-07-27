@@ -41,9 +41,9 @@ public class UserAccountService {
 	 * @Param String clientId 
 	 * clientId can be FB Id or Phone Id (Phone Login)
 	 */
-	public OutngUser getUserByClientId(String clientId) {
+	public OutngUser getUserByUserPartnerId(String userPartnerId) {
 		Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
-		eav.put(":v1",  new AttributeValue().withS(clientId));
+		eav.put(":v1",  new AttributeValue().withS(userPartnerId));
 		
 		Map<String, String> ean = new HashMap<String, String>();
 		ean.put("#name",  "name");
