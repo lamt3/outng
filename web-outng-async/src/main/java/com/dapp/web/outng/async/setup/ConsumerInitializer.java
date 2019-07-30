@@ -23,10 +23,9 @@ public class ConsumerInitializer implements ApplicationContextAware, Initializin
 	public void afterPropertiesSet() throws Exception {
 		
 		try {
-//			BasicConfigurator.configure();
 			String servers = "localhost:9092";
 
-			String topic = "async-events";
+			String topic = "outng-async-topic";
 			int threadPoolSize = 4;
 
 			ExecutorService ces = CoreThreadPoolFactory.createThreadPool("async-event",
@@ -47,8 +46,7 @@ public class ConsumerInitializer implements ApplicationContextAware, Initializin
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		// TODO Auto-generated method stub
-
+		this.applicationContext = applicationContext;
 	}
 
 }

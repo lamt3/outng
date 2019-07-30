@@ -5,29 +5,39 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dapp.outng.common.db.OutngDynamoClient;
-import com.dapp.outng.recommendations.services.SearchCreationService;
-
-import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
+import com.dapp.outng.common.models.actions.ActionTypes;
+import com.dapp.outng.common.models.actions.OutngAction;
+import com.dapp.outng.common.models.user.OutngUser;
+import com.dapp.outng.messaging.producers.MessageProducer;
+import com.dapp.outng.profile.services.UserAccountService;
+import com.google.gson.Gson;
 
 @RestController
 @RequestMapping("/api/v1/services/user")
 public class ProfileController {
 
 	@Autowired
-	private OutngDynamoClient c;
+	private UserAccountService userAccountService;
 	@Autowired
-	private SearchCreationService a;
+	private MessageProducer messageProducer;
 	
 	
 	
-	
-	@RequestMapping(value = "/signup", method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
-	public String signUpUser(HttpServletRequest httpRequest, HttpServletResponse response) {
+	@RequestMapping(value = "/signup", method = {RequestMethod.PUT}, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+	public String signUpUser(HttpServletRequest httpRequest, HttpServletResponse response, @RequestBody OutngUser user) {
+		
+		userAccountService.updateUserInfo(user);
+		
+		Gson gson = new Gson();
+		OutngAction action = new OutngAction(ActionTypes.CREATE_USER_REC, user);
+		String payload = gson.toJson(action);
+		
+		messageProducer.sendMessage("outng-async-topic", user.getUserId(), payload);
 		
 		return "Success";
 		
