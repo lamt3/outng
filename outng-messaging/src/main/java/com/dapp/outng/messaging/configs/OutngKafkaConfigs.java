@@ -11,7 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource(name = "props", value = "classpath:outng-kafka.properties", ignoreResourceNotFound = true)
-//@ConfigurationProperties(prefix = "kafka")
+@ConfigurationProperties(prefix = "kafka")
 public class OutngKafkaConfigs {
 
 	@Value("${kafka.servers}")
