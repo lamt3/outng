@@ -5,12 +5,13 @@ import java.util.Properties;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource(name = "props", value = "classpath:application.properties", ignoreResourceNotFound = false)
-@ConfigurationProperties(prefix = "kafka")
+@PropertySource(name = "props", value = "classpath:outng-kafka.properties", ignoreResourceNotFound = true)
+//@ConfigurationProperties(prefix = "kafka")
 public class OutngKafkaConfigs {
 
 	@Value("${kafka.servers}")

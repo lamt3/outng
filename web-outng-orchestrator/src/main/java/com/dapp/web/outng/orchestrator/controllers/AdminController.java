@@ -22,6 +22,7 @@ import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.dapp.outng.common.db.OutngDynamoClient;
 import com.dapp.outng.common.models.user.OutngUser;
 import com.dapp.outng.common.utils.DateUtils;
+import com.dapp.outng.messaging.configs.OutngKafkaConfigs;
 import com.dapp.outng.profile.services.UserAccountService;
 import com.dapp.outng.recommendations.services.SearchCreationService;
 
@@ -37,6 +38,8 @@ public class AdminController {
 	private SearchCreationService searchCreationService;
 	@Autowired 
 	private UserAccountService userService;
+	@Autowired
+	private OutngKafkaConfigs kafkaConfigs;
 	
 
 	protected AmazonDynamoDB client;
@@ -56,6 +59,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "user/{userId}", method = { RequestMethod.GET }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 	public ResponseEntity<OutngUser> getUser(HttpServletRequest httpRequest, HttpServletResponse response, @PathVariable String userId) {
+		String a = kafkaConfigs.getServersToConnect();
 		DynamoDBMapper mapper = new DynamoDBMapper(client);
 		OutngUser user = mapper.load(OutngUser.class, userId);
 		user.setAge(DateUtils.getAge(user.getBirthDate()));
