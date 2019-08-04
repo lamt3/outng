@@ -64,9 +64,10 @@ public class MessageProducerImpl implements MessageProducer {
 		
 
 			if (exception == null) {
-				if (LOG.isDebugEnabled()) {
-					LOG.debug("[PRODUCER] accepted message -- topic:{} key:{} time:{} ms", topic, key, duration);
-				}
+				LOG.info("[PRODUCER] accepted message -- topic:{} key:{} time:{} ms", topic, key, duration);
+//				if (LOG.isDebugEnabled()) {
+//					
+//				}
 			} else {
 				if (metadata == null) {
 					LOG.error("[PRODUCER] error while sending message to kafka", exception);

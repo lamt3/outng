@@ -5,6 +5,6 @@ import com.dapp.outng.partner.models.ValidUserResponse;
 
 public interface UserValidator {
 	
-	public ValidUserResponse validateUserAccessToken(String userAccessToken);
+	public ValidUserResponse validateUserAuthToken(String userAccessToken);
 
 }

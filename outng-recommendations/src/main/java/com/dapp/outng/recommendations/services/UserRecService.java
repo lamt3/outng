@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dapp.outng.common.db.OutngSearchClient;
 import com.dapp.outng.common.models.user.OutngUser;
+import com.dapp.outng.recommendations.builders.ElasticRequestBuilder;
 
 public class UserRecService {
 	
@@ -30,7 +31,6 @@ public class UserRecService {
 	@PostConstruct
 	public void initialize() {
 		this.searchClient = outngSearchClient.getSearchClient();
-		
 	}
 	
 	public void getUserRecs() {
@@ -43,46 +43,40 @@ public class UserRecService {
 		request.source(userPayload, XContentType.JSON);
 		try {
 			IndexResponse indexResponse = searchClient.index(request, RequestOptions.DEFAULT);
-			System.out.println(indexResponse.getIndex());
 		} catch (IOException e) {
-			LOG.error("Error handling indexing userId:{}", userId, e.getMessage());
+			LOG.error("ES Error handling indexing userId:{}", userId, e.getMessage());
 		}
 	}
 	
-//	public void indexOutngUser(OutngUser outngUser) {
-//		IndexRequest request = new IndexRequest("user_test3"); 
-//		request.id(userId); 
-//		request.source(userPayload, XContentType.JSON);
-//		try {
-//			IndexResponse indexResponse = searchClient.index(request, RequestOptions.DEFAULT);
-//			System.out.println(indexResponse.getIndex());
-//		} catch (IOException e) {
-//			LOG.error("Error handling indexing userId:{}", userId, e.getMessage());
-//		}
-//	}
+	public void indexOutngUserObject(OutngUser outngUser) {
+		IndexRequest request = ElasticRequestBuilder.buildUserIndexRequest(outngUser);
+		try {
+			IndexResponse indexResponse = searchClient.index(request, RequestOptions.DEFAULT);
+			LOG.info("Successful Insert of OutngUser into ES: {}", indexResponse);
+		} catch (IOException e) {
+			LOG.error("ES Error handling indexing userId:{}", outngUser.getUserId(), e.getMessage());
+		}
+	}
 	
-	public void updateOutngUser(String userPayload, String userId) {
-		UpdateRequest updateRequest = new UpdateRequest();
-		updateRequest.index("user_test3");
-		updateRequest.id(userId);
-		updateRequest.doc(XContentType.JSON, userPayload);
+	public void updateOutngUser(OutngUser outngUser) {
+		UpdateRequest updateRequest = ElasticRequestBuilder.buildUserUpdateRequest(outngUser);
 		try {
 			searchClient.update(updateRequest, RequestOptions.DEFAULT);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error("ES Error handling updating userId:{}", outngUser.getUserId(), e.getMessage());
 		}
 	}
 	
-	public void deleteOutngUser(String userPayload, String userId) {
+	public void deleteOutngUser(String userId) {
 		DeleteRequest deleteRequest = new DeleteRequest("user_test3", userId);
 		try {
 			searchClient.delete(deleteRequest, RequestOptions.DEFAULT);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error("ES Error handling deleting userId:{}", userId, e.getMessage());
 		}
 	}
+	
+	
 	
 	
 	

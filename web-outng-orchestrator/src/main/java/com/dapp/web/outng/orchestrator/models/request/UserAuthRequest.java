@@ -1,20 +1,12 @@
 package com.dapp.web.outng.orchestrator.models.request;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class UserAuthRequest {
-	private String clientAuthAccessToken;
-	private String authType;
-	
-	public String getClientAuthAccessToken() {
-		return clientAuthAccessToken;
-	}
-	public void setClientAuthAccessToken(String clientAuthAccessToken) {
-		this.clientAuthAccessToken = clientAuthAccessToken;
-	}
-	public String getAuthType() {
-		return authType;
-	}
-	public void setAuthType(String authType) {
-		this.authType = authType;
-	}
+	private String userAccessToken;
+	private String partnerType;
 	
 }

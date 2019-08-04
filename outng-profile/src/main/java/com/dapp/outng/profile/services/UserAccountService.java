@@ -18,7 +18,6 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.dapp.outng.common.db.OutngDynamoClient;
 import com.dapp.outng.common.models.user.OutngUser;
 import com.dapp.outng.common.utils.DateUtils;
-import com.dapp.outng.profile.models.AppUser;
 
 @Component
 public class UserAccountService {
@@ -49,10 +48,10 @@ public class UserAccountService {
 		ean.put("#location", "location");
 		
 		DynamoDBQueryExpression<OutngUser> queryExpression = new DynamoDBQueryExpression<OutngUser>()
-				.withIndexName("clientUserId").withConsistentRead(false)
-				.withProjectionExpression("userId, interests, gender, #location, #name")
+				.withIndexName("partnerUserId").withConsistentRead(false)
+				.withProjectionExpression("userId, userDetail, #location, #name")
 				.withExpressionAttributeNames(ean)
-				.withKeyConditionExpression("clientUserId = :v1")
+				.withKeyConditionExpression("partnerUserId = :v1")
 				.withExpressionAttributeValues(eav);
 		
 		PaginatedQueryList<OutngUser> user = mapper.query(OutngUser.class, queryExpression);
@@ -78,8 +77,17 @@ public class UserAccountService {
 
 	}
 	
-	public void saveUser(AppUser appUser) {
-
+	public OutngUser saveUser(OutngUser outngUser) {
+		mapper.save(outngUser);
+		return outngUser;
+	}
+	
+	public OutngUser createNewUser(String partnerUserId, String partnerType) {
+		OutngUser newUser = new OutngUser();
+		newUser.setPartnerUserId(partnerUserId);
+		newUser.setPartnerUserType(partnerType);
+		mapper.save(newUser);
+		return newUser;
 	}
 	
 	

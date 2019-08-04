@@ -33,11 +33,11 @@ public class JwtTokenProvider {
 	@Autowired
 	private JwtConfig jwtConfig;
 
-	public String generateToken(Long appUserId) {
+	public String generateToken(String appUserId) {
 		Date now = new Date();
 		Date expiryDate = new Date(now.getTime() + jwtConfig.getJwtExpirationInMs());
 
-		return Jwts.builder().setSubject(Long.toString(appUserId)).setIssuedAt(new Date()).setExpiration(expiryDate)
+		return Jwts.builder().setSubject(appUserId).setIssuedAt(new Date()).setExpiration(expiryDate)
 				.signWith(SignatureAlgorithm.HS512, jwtConfig.getJwtSecret()).compact();
 	}
 
