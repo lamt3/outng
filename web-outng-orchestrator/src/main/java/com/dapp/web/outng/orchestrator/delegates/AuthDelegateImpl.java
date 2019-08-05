@@ -23,8 +23,6 @@ public class AuthDelegateImpl implements AuthDelegate {
 
 	public UserAuthResponse authorizeUserAndGenerateJWT(UserAuthRequest userAuthRequest) {
 		
-		String jwt2 = tokenProvider.generateToken("5bbc436e-f8ed-4663-8a0c-eeb1ba7f0b8e");
-		
 		UserValidator userValidator = UserValidatorFactory.getUserValidator(userAuthRequest.getPartnerType());
 		ValidUserResponse validUser = userValidator.validateUserAuthToken(userAuthRequest.getUserAccessToken());
 		UserAuthResponse userAuthResponse = new UserAuthResponse();
