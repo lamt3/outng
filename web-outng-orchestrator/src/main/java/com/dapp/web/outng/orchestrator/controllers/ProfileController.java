@@ -4,10 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dapp.outng.common.models.actions.ActionTypes;
@@ -28,7 +27,8 @@ public class ProfileController {
 	
 	
 	
-	@RequestMapping(value = "/signup", method = {RequestMethod.PUT}, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+//	@RequestMapping(value = "/signup", method = {RequestMethod.PUT}, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+	@PutMapping("/signup")
 	public String signUpUser(HttpServletRequest httpRequest, HttpServletResponse response, @RequestBody OutngUser user) {
 		
 		userAccountService.updateUserInfo(user);

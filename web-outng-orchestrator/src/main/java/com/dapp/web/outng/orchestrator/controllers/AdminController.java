@@ -64,7 +64,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "user/table", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
-	public String createTable2(HttpServletRequest httpRequest, HttpServletResponse response, @RequestBody OutngUser user) {
+	public String createTable2(HttpServletRequest httpRequest, HttpServletResponse response) {
 		DynamoDBMapper mapper = new DynamoDBMapper(client);
 		CreateTableRequest req = mapper.generateCreateTableRequest(OutngUser.class);
 		req.setProvisionedThroughput(new ProvisionedThroughput(5L, 5L));
