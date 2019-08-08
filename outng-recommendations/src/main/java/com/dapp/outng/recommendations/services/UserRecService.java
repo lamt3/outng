@@ -14,11 +14,13 @@ import org.elasticsearch.common.xcontent.XContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.dapp.outng.common.db.OutngSearchClient;
 import com.dapp.outng.common.models.user.OutngUser;
 import com.dapp.outng.recommendations.builders.ElasticRequestBuilder;
 
+@Component
 public class UserRecService {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(UserRecService.class);

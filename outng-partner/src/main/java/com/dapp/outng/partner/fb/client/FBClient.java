@@ -5,15 +5,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.dapp.outng.partner.configs.PartnerSecretsConfig;
 import com.dapp.outng.partner.fb.models.FBAppAccessToken;
+import com.dapp.outng.partner.fb.models.FBUserAuthResponse;
 import com.dapp.outng.partner.models.ValidUserResponse;
+import com.google.gson.Gson;
 
 @Component
 public class FBClient {
@@ -48,23 +48,20 @@ public class FBClient {
 		String fbRequestURL = String.format("https://graph.facebook.com/debug_token?input_token=%s&access_token=%s", userAccessToken, appAccessToken);
 		Object response = fbRestTemplate.getForObject(fbRequestURL, Object.class);
 		String r = response.toString();
-		JSONObject obj = null;
-		String appId = null;
-		String userId = null;
+		Gson gson = new Gson();
+
+		ValidUserResponse resp = null;
 		try {
-			obj = new JSONObject(r);
-			obj = obj.getJSONObject("data");
-			appId = obj.getString("app_id");
-			userId = obj.getString("user_id");
-		} catch (JSONException e) {
+			FBUserAuthResponse fbUserAuthResponse = gson.fromJson(r, FBUserAuthResponse.class);
+			if(fbUserAuthResponse != null && fbUserAuthResponse.getData() != null && StringUtils.isNotBlank(fbUserAuthResponse.getData().getUser_id())) {
+				resp = new ValidUserResponse(true, "FB", fbUserAuthResponse.getData().getUser_id());
+			}
+		
+		} catch (Exception e) {
 			LOG.error("Error verifying user token: {}", e);
 		}
 		
-		if(StringUtils.isNotEmpty(userId) && StringUtils.isNotEmpty(appId)) {
-			return new ValidUserResponse (true, "FB", userId);
-		}
-		
-		return null;
+		return resp;
 	}
 	
 
