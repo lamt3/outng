@@ -1,24 +1,26 @@
 package com.dapp.web.outng.orchestrator.services.validator;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.dapp.outng.partner.fb.client.FBClient;
-import com.dapp.outng.partner.fb.models.FBAppAccessToken;
 import com.dapp.outng.partner.models.ValidUserResponse;
 
-@Component("FbUserValidator")
+@Component("Fb")
 public class FbUserValidator implements UserValidator {
 
 	@Autowired
 	private FBClient fbClient;
 
-	public ValidUserResponse validateUserAccessToken(String userAccessToken) {
+	public ValidUserResponse validateUserAuthToken(String userAuthToken) {
 
-		FBAppAccessToken appAccessToken = fbClient.getAppAccessToken();
+		String appAccessToken = fbClient.getAppAccessToken();
 		ValidUserResponse validUser = null;
-		if (appAccessToken != null && appAccessToken.getAccess_token() != null) {
-			validUser = fbClient.verifyFBUser(appAccessToken.getAccess_token(), userAccessToken);
+
+		
+		if (StringUtils.isNotBlank(appAccessToken)) {
+			validUser = fbClient.verifyFBUser(appAccessToken, userAuthToken);
 		}
 
 		return validUser;

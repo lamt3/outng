@@ -11,10 +11,12 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.dapp.outng.messaging.configs.OutngKafkaConfigs;
 import com.dapp.outng.messaging.utils.KafkaUtil;
 
+@Component
 public class MessageProducerImpl implements MessageProducer {
 
 	private static final Logger LOG = LoggerFactory.getLogger(MessageProducerImpl.class);
@@ -22,22 +24,22 @@ public class MessageProducerImpl implements MessageProducer {
 	@Autowired
 	private OutngKafkaConfigs kafkaConfig;
 
-	private Producer<String, String> producer;
+	private Producer<String, String> kafkaProducer;
 	
 	@PostConstruct
 	public void init() {
-		producer = new KafkaProducer<>(KafkaUtil.setUpProducerProperties(kafkaConfig));
+		kafkaProducer = new KafkaProducer<>(KafkaUtil.setUpProducerProperties(kafkaConfig));
 	}
 
 	@Override
 	public void sendMessage(String topic, String key, String value) {
-		producer.send(new ProducerRecord<String, String>(topic, key, value), new MessageSendCallback(topic, key));
+		kafkaProducer.send(new ProducerRecord<String, String>(topic, key, value), new MessageSendCallback(topic, key));
 		LOG.debug("[PRODUCER] offer message -- topic:{} key:{} message:{}", topic, key, value);
 	}
 	
 	@PreDestroy
 	public void close() {
-		producer.close();
+		kafkaProducer.close();
 	}
 
 	class MessageSendCallback implements Callback {
@@ -62,9 +64,10 @@ public class MessageProducerImpl implements MessageProducer {
 		
 
 			if (exception == null) {
-				if (LOG.isDebugEnabled()) {
-					LOG.debug("[PRODUCER] accepted message -- topic:{} key:{} time:{} ms", topic, key, duration);
-				}
+				LOG.info("[PRODUCER] accepted message -- topic:{} key:{} time:{} ms", topic, key, duration);
+//				if (LOG.isDebugEnabled()) {
+//					
+//				}
 			} else {
 				if (metadata == null) {
 					LOG.error("[PRODUCER] error while sending message to kafka", exception);

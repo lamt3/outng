@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.dapp.outng.partner.configs.PartnerSecretsConfig;
 import com.dapp.outng.partner.fb.models.FBAppAccessToken;
 import com.dapp.outng.partner.models.ValidUserResponse;
 
@@ -23,18 +24,23 @@ public class FBClient {
 	@Qualifier("fbRestTemplate")
 	private RestTemplate fbRestTemplate;
 	
-	public FBAppAccessToken getAppAccessToken() {
-		
-		//check db first 
-		
+	@Autowired
+	private PartnerSecretsConfig partnerConfig;
 	
-		String fbAppAccessTokenEndpoint = String.format("https://graph.facebook.com/oauth/access_token?client_id=%s&client_secret=%s&grant_type=%s", "2765121657046995", "941672fb921d88d815a2641d52c42cf7", "client_credentials");
-		
-		ResponseEntity<FBAppAccessToken> response = fbRestTemplate.getForEntity(fbAppAccessTokenEndpoint, FBAppAccessToken.class);
-		if(response == null||  response.getBody()==null) {
-			return null;
+	public String getAppAccessToken() {
+
+		String fbAppAccessToken = partnerConfig.getFbAppAccessToken();
+		if(StringUtils.isBlank(fbAppAccessToken)) {
+			String fbAppAccessTokenEndpoint = String.format("https://graph.facebook.com/oauth/access_token?client_id=%s&client_secret=%s&grant_type=%s", "2765121657046995", "941672fb921d88d815a2641d52c42cf7", "client_credentials");
+			
+			ResponseEntity<FBAppAccessToken> response = fbRestTemplate.getForEntity(fbAppAccessTokenEndpoint, FBAppAccessToken.class);
+			if(response == null||  response.getBody()==null) {
+				return null;
+			}
+			fbAppAccessToken = response.getBody().getAccess_token();
 		}
-		return response.getBody();
+	
+		return fbAppAccessToken;
 
 	}
 	

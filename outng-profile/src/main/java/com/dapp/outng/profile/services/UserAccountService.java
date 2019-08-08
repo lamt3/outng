@@ -12,14 +12,12 @@ import org.springframework.stereotype.Component;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig.SaveBehavior;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.dapp.outng.common.db.OutngDynamoClient;
 import com.dapp.outng.common.models.user.OutngUser;
 import com.dapp.outng.common.utils.DateUtils;
-import com.dapp.outng.profile.models.AppUser;
 
 @Component
 public class UserAccountService {
@@ -41,19 +39,19 @@ public class UserAccountService {
 	 * @Param String clientId 
 	 * clientId can be FB Id or Phone Id (Phone Login)
 	 */
-	public OutngUser getUserByClientId(String clientId) {
+	public OutngUser getUserByUserPartnerId(String userPartnerId) {
 		Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
-		eav.put(":v1",  new AttributeValue().withS(clientId));
+		eav.put(":v1",  new AttributeValue().withS(userPartnerId));
 		
 		Map<String, String> ean = new HashMap<String, String>();
 		ean.put("#name",  "name");
 		ean.put("#location", "location");
 		
 		DynamoDBQueryExpression<OutngUser> queryExpression = new DynamoDBQueryExpression<OutngUser>()
-				.withIndexName("clientUserId").withConsistentRead(false)
-				.withProjectionExpression("userId, interests, gender, #location, #name")
+				.withIndexName("partnerUserId").withConsistentRead(false)
+				.withProjectionExpression("userId, userDetail, #location, #name")
 				.withExpressionAttributeNames(ean)
-				.withKeyConditionExpression("clientUserId = :v1")
+				.withKeyConditionExpression("partnerUserId = :v1")
 				.withExpressionAttributeValues(eav);
 		
 		PaginatedQueryList<OutngUser> user = mapper.query(OutngUser.class, queryExpression);
@@ -79,8 +77,17 @@ public class UserAccountService {
 
 	}
 	
-	public void saveUser(AppUser appUser) {
-
+	public OutngUser saveUser(OutngUser outngUser) {
+		mapper.save(outngUser);
+		return outngUser;
+	}
+	
+	public OutngUser createNewUser(String partnerUserId, String partnerType) {
+		OutngUser newUser = new OutngUser();
+		newUser.setPartnerUserId(partnerUserId);
+		newUser.setPartnerUserType(partnerType);
+		mapper.save(newUser);
+		return newUser;
 	}
 	
 	

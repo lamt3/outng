@@ -1,0 +1,8 @@
+spring:
+  profiles: dev
+
+consumers:
+  - topicThreadConfigs:
+    name: 
+    
+    

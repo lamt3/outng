@@ -11,6 +11,7 @@ import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 
+import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 @Component
@@ -22,12 +23,12 @@ public class OutngDynamoClient {
 	// @Value("${cloud.aws.credentials.secretKey}")
 	// private String secretKey;
 
-	public DynamoDbClient dynamoDbClient;
+	public DynamoDbAsyncClient dynamoDbClient;
 	public AmazonDynamoDB dynamoDbClientV1;
 
 	@PostConstruct
 	public void initialize() {
-		DynamoDbClient client = DynamoDbClient.builder().endpointOverride(URI.create("http://localhost:8000")).build();
+		DynamoDbAsyncClient client = DynamoDbAsyncClient.builder().endpointOverride(URI.create("http://localhost:8000")).build();
 
 		AmazonDynamoDB amazonDynamoDB = AmazonDynamoDBClientBuilder.standard()
 				.withEndpointConfiguration(new EndpointConfiguration("http://localhost:8000", "us-west-2")).build();
@@ -37,7 +38,7 @@ public class OutngDynamoClient {
 
 	}
 
-	public DynamoDbClient getClient() {
+	public DynamoDbAsyncClient getClient() {
 		return this.dynamoDbClient;
 	}
 

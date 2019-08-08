@@ -1,4 +1,4 @@
-package com.dapp.outng.common.configs;
+package com.dapp.outng.partner.configs;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -8,12 +8,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Configuration
-//@EnableConfigurationProperties
-@ConfigurationProperties(prefix = "jwt-configs")
+@EnableConfigurationProperties
+@ConfigurationProperties(prefix = "partner")
 @Getter
 @Setter
-public class JwtConfig {
+public class PartnerSecretsConfig {
 	
-    private String jwtSecret;
-    private Long jwtExpirationInMs;
+	private String fbAppAccessToken;
+
 }

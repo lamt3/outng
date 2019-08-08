@@ -1,14 +1,11 @@
 package com.dapp.outng.common.security;
 
-import java.security.SignatureException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.dapp.outng.common.configs.JwtConfig;
-import com.dapp.outng.common.http.SecurityConstants;
-import io.jsonwebtoken.*;
-import lombok.val;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
+import com.dapp.outng.common.configs.JwtConfig;
+import com.dapp.outng.common.http.SecurityConstants;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtParser;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.UnsupportedJwtException;
+import lombok.val;
 
 @Component
 public class JwtTokenProvider {
@@ -26,11 +33,11 @@ public class JwtTokenProvider {
 	@Autowired
 	private JwtConfig jwtConfig;
 
-	public String generateToken(Long appUserId) {
+	public String generateToken(String appUserId) {
 		Date now = new Date();
 		Date expiryDate = new Date(now.getTime() + jwtConfig.getJwtExpirationInMs());
 
-		return Jwts.builder().setSubject(Long.toString(appUserId)).setIssuedAt(new Date()).setExpiration(expiryDate)
+		return Jwts.builder().setSubject(appUserId).setIssuedAt(new Date()).setExpiration(expiryDate)
 				.signWith(SignatureAlgorithm.HS512, jwtConfig.getJwtSecret()).compact();
 	}
 

@@ -22,6 +22,7 @@ import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.dapp.outng.common.db.OutngDynamoClient;
 import com.dapp.outng.common.models.user.OutngUser;
 import com.dapp.outng.common.utils.DateUtils;
+import com.dapp.outng.messaging.configs.OutngKafkaConfigs;
 import com.dapp.outng.profile.services.UserAccountService;
 import com.dapp.outng.recommendations.services.SearchCreationService;
 
@@ -63,7 +64,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "user/table", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
-	public String createTable2(HttpServletRequest httpRequest, HttpServletResponse response, @RequestBody OutngUser user) {
+	public String createTable2(HttpServletRequest httpRequest, HttpServletResponse response) {
 		DynamoDBMapper mapper = new DynamoDBMapper(client);
 		CreateTableRequest req = mapper.generateCreateTableRequest(OutngUser.class);
 		req.setProvisionedThroughput(new ProvisionedThroughput(5L, 5L));
@@ -82,7 +83,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "user/by_clientId/{clientId}", method = { RequestMethod.GET }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 	public ResponseEntity <OutngUser> findUserByClientId(HttpServletRequest httpRequest, HttpServletResponse response, @PathVariable String clientId) {
-		OutngUser user = userService.getUserByClientId(clientId);
+		OutngUser user = userService.getUserByUserPartnerId(clientId);
 		return ResponseEntity.ok().body(user);
 	}
 	
@@ -91,7 +92,6 @@ public class AdminController {
 		user = userService.updateUserInfo(user);
 		return ResponseEntity.ok().body(user);
 	}
-	
 	
 	
 }
