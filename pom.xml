@@ -41,7 +41,7 @@
 
 		<version.slf4j>1.7.25</version.slf4j>
 		<lombok.version>1.18.8</lombok.version>
-
+		<apache.commons.version>3.9</apache.commons.version>
 		<elastic.version>7.2.0</elastic.version>
 	</properties>
 
@@ -210,6 +210,18 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>${lombok.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${apache.commons.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.9.4</version>
 		</dependency>
 
 	</dependencies>
