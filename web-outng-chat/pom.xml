@@ -20,6 +20,8 @@
 		<debug.port>8087</debug.port>
 		<debug.suspend>n</debug.suspend>
 		<docker.image.prefix>outng/outng-chat-image</docker.image.prefix>
+		<jedis>2.9.0</jedis>
+
 	</properties>
 
 
@@ -86,33 +88,35 @@
 
 
 	<dependencies>
-		<dependency>
-			<groupId>com.dapp</groupId>
-			<artifactId>outng-partner</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+		<!-- <dependency> <groupId>com.dapp</groupId> <artifactId>outng-partner</artifactId> 
+			<version>${project.version}</version> </dependency> <dependency> <groupId>com.dapp</groupId> 
+			<artifactId>outng-common</artifactId> <version>${project.version}</version> 
+			</dependency> <dependency> <groupId>com.dapp</groupId> <artifactId>outng-profile</artifactId> 
+			<version>${project.version}</version> </dependency> -->
 		<dependency>
 			<groupId>com.dapp</groupId>
 			<artifactId>outng-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.dapp</groupId>
-			<artifactId>outng-profile</artifactId>
-			<version>${project.version}</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-messaging</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-amqp</artifactId> 
+			</dependency> <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-reactor-netty</artifactId> 
+			</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-amqp</artifactId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-reactor-netty</artifactId>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${jedis}</version>
 		</dependency>
 
 
