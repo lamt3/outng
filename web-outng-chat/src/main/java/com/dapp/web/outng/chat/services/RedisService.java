@@ -6,10 +6,13 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundListOperations;
 import org.springframework.data.redis.core.BoundValueOperations;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
+
+import com.dapp.web.outng.chat.models.ChatMessage;
 
 @Component
 public class RedisService {
@@ -31,7 +34,6 @@ public class RedisService {
 	
 	public <K> K get(String key) {
 		ValueOperations<String, Object> valueOperation = redisTemplate.opsForValue();
-
 		return (K) valueOperation.get(key);
 	}
 
@@ -46,6 +48,7 @@ public class RedisService {
 		BoundListOperations<String, Object> boundValueOperations = redisTemplate.boundListOps(listKey);
 		// 插入数据
 		boundValueOperations.leftPushAll(values);
+		
 		// 设置过期时间
 		boundValueOperations.expire(30L, TimeUnit.DAYS);
 	}
@@ -82,7 +85,7 @@ public class RedisService {
 		SetOperations<String, Object> opsForSet = redisTemplate.opsForSet();
 		opsForSet.remove(setKey, values);
 	}
-
+	
 	public void convertAndSend(String channel, Object message) {
 		redisTemplate.convertAndSend(channel, message);
 	}

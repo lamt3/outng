@@ -15,5 +15,7 @@ import lombok.Setter;
 @DynamoDBDocument
 public class UserPreference {
 	private String lookingFor;
+	private int distanceFilter;
+	
 	
 }

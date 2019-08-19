@@ -40,20 +40,20 @@ public class OutngChannelInterceptor implements ChannelInterceptor {
 			MultiValueMap<String, String> multiValueMap = headers.get(StompHeaderAccessor.NATIVE_HEADERS, MultiValueMap.class);	
 			
 			List<String> jwtList = multiValueMap.get("jwt");
-			String jwtUser;
-			if(jwtList.size() > 0 && StringUtils.isNotBlank(jwtList.get(0))) {
-				String jwt = jwtList.get(0);
-				jwtUser = provider.getUserIdFromJwt(jwt);
-				MyPrincipal principalUser = (MyPrincipal) headers.get("simpUser");
-				
-				if(StringUtils.isNotBlank(jwtUser) && principalUser != null && StringUtils.isNotBlank(principalUser.getName())) {
-					
-					redisService.addToSet("outng:socket-connection:user-" + jwtUser, principalUser.getName());
-					
-				}
-				
-				
-			}
+//			String jwtUser;
+//			if(jwtList.size() > 0 && StringUtils.isNotBlank(jwtList.get(0))) {
+//				String jwt = jwtList.get(0);
+//				jwtUser = provider.getUserIdFromJwt(jwt);
+//				MyPrincipal principalUser = (MyPrincipal) headers.get("simpUser");
+//				
+//				if(StringUtils.isNotBlank(jwtUser) && principalUser != null && StringUtils.isNotBlank(principalUser.getName())) {
+//					
+//					redisService.addToSet("outng:socket-connection:user-" + jwtUser, principalUser.getName());
+//					
+//				}
+//				
+//				
+//			}
 			
 			return MessageBuilder.createMessage(message.getPayload(), accessor.getMessageHeaders());
 		

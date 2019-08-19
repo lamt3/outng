@@ -1,5 +1,8 @@
 package com.dapp.web.outng.chat.configs;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -49,101 +52,6 @@ public class RedisConfig {
 	@Value("${spring.redis.message.topic-name}")
 	private String topicName;
 
-//    @Bean
-//    public JedisPoolConfig jedisPoolConfig(){
-//        JedisPoolConfig config = new JedisPoolConfig();
-//        config.setMaxTotal(maxActive);
-//        config.setMaxIdle(maxIdle);
-//        config.setMinIdle(minIdle);
-//        config.setMaxWaitMillis(maxWait);
-//
-//        return config;
-//    }
-//
-//    @Bean
-//    public RedisClusterConfiguration redisClusterConfiguration(){
-//        RedisClusterConfiguration configuration = new RedisClusterConfiguration(Arrays.asList(nodes));
-//        configuration.setMaxRedirects(maxRedirects);
-//
-//        return configuration;
-//    }
-//
-//    /**
-//     * JedisConnectionFactory
-//     */
-//    @Bean
-//    public JedisConnectionFactory jedisConnectionFactory(RedisClusterConfiguration configuration,JedisPoolConfig jedisPoolConfig){
-////        return new JedisConnectionFactory(configuration,jedisPoolConfig);
-//    	 JedisConnectionFactory jedisConFactory
-//         = new JedisConnectionFactory();
-//       jedisConFactory.setHostName("localhost");
-//       jedisConFactory.setPort(6379);
-//       return jedisConFactory;
-//    }
-//
-//    /**
-//     * 使用Jackson序列化对象
-//     */
-//    @Bean
-//    public Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer(){
-//        Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<Object>(Object.class);
-//
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-//        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-//        serializer.setObjectMapper(objectMapper);
-//
-//        return serializer;
-//    }
-//
-//    /**
-//     * RedisTemplate
-//     */
-//    @Bean
-//    public RedisTemplate<String, Object> redisTemplate(JedisConnectionFactory factory, Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer){
-//        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-//        redisTemplate.setConnectionFactory(factory);
-//
-//        //字符串方式序列化KEY
-//        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-//        redisTemplate.setKeySerializer(stringRedisSerializer);
-//        redisTemplate.setHashKeySerializer(stringRedisSerializer);
-//
-//        //JSON方式序列化VALUE
-//        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
-//        redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
-//
-//        redisTemplate.afterPropertiesSet();
-//
-//        return redisTemplate;
-//    }
-//
-//    /**
-//     * 消息监听器
-//     */
-//    @Bean
-//    MessageListenerAdapter messageListenerAdapter(MessageReceiver messageReceiver, Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer){
-//        //消息接收者以及对应的默认处理方法
-//        MessageListenerAdapter messageListenerAdapter = new MessageListenerAdapter(messageReceiver, "receiveMessage");
-//        //消息的反序列化方式
-//
-//        return messageListenerAdapter;
-//    }
-//
-//    /**
-//     * message listener container
-//     */
-//    @Bean
-//    RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory
-//            , MessageListenerAdapter messageListenerAdapter){
-//        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-//        container.setConnectionFactory(connectionFactory);
-//        //添加消息监听器
-//        container.addMessageListener((MessageListener) messageListenerAdapter, new PatternTopic(topicName));
-//
-//        return container;
-//    }
-
 	@Bean
 	RedisReceiver receiver() {
 		return new RedisReceiver();
@@ -155,10 +63,11 @@ public class RedisConfig {
 	}
 
 	@Bean
-	RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory,
-			@Qualifier("chatMessageListenerAdapter") MessageListenerAdapter chatMessageListenerAdapter) {
+	RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory, @Qualifier("chatMessageListenerAdapter") MessageListenerAdapter chatMessageListenerAdapter) {
 		System.out.println(connectionFactory.getConnection().getClientName());
 		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+//		ExecutorService executorService = Executors.newFixedThreadPool(2);
+//		container.setTaskExecutor(executorService);
 		container.setConnectionFactory(connectionFactory);
 		container.addMessageListener(chatMessageListenerAdapter, new PatternTopic("chat"));
 		container.afterPropertiesSet();
@@ -179,8 +88,8 @@ public class RedisConfig {
 		final RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
 		redisTemplate.setHashKeySerializer(new GenericToStringSerializer<Object>(Object.class));
-		redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
-		redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
+		redisTemplate.setHashValueSerializer(new StringRedisSerializer());
+		redisTemplate.setValueSerializer(new StringRedisSerializer());
 		redisTemplate.setConnectionFactory(jedisConnectionFactory());
 		return redisTemplate;
 	}
