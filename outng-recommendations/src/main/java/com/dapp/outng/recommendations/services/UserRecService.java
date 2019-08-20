@@ -3,6 +3,7 @@ package com.dapp.outng.recommendations.services;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 
@@ -14,20 +15,23 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.dapp.outng.common.db.OutngDynamoClient;
 import com.dapp.outng.common.db.OutngSearchClient;
 import com.dapp.outng.common.models.user.OutngUser;
 import com.dapp.outng.recommendations.builders.ElasticRequestBuilder;
-import com.dapp.outng.recommendations.builders.UserRecQueryBuilder;
-import com.dapp.outng.recommendations.models.UserRecQuery;
+import com.dapp.outng.recommendations.builders.UserRecBuilder;
+import com.dapp.outng.recommendations.models.userrec.UserRecQuery;
 
 @Component
 public class UserRecService {
@@ -37,11 +41,19 @@ public class UserRecService {
 	@Autowired
 	private OutngSearchClient outngSearchClient;
 	
+	@Autowired
+	private OutngDynamoClient dynamoClient;
+	
+	protected AmazonDynamoDB client;
+	protected DynamoDBMapper mapper ;
+	
 	private RestHighLevelClient searchClient;
 	
 	@PostConstruct
 	public void initialize() {
 		this.searchClient = outngSearchClient.getSearchClient();
+		this.client = dynamoClient.getClientV1();
+		mapper = new DynamoDBMapper(client);
 	}
 	
 	
@@ -51,6 +63,7 @@ public class UserRecService {
 		request.source(userPayload, XContentType.JSON);
 		try {
 			IndexResponse indexResponse = searchClient.index(request, RequestOptions.DEFAULT);
+			LOG.info("Successful Insert of OutngUser into ES: {}", indexResponse);
 		} catch (IOException e) {
 			LOG.error("ES Error handling indexing userId:{}", userId, e.getMessage());
 		}
@@ -61,7 +74,7 @@ public class UserRecService {
 		try {
 			IndexResponse indexResponse = searchClient.index(request, RequestOptions.DEFAULT);
 			LOG.info("Successful Insert of OutngUser into ES: {}", indexResponse);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			LOG.error("ES Error handling indexing userId:{}", outngUser.getUserId(), e.getMessage());
 		}
 	}
@@ -79,7 +92,7 @@ public class UserRecService {
 		DeleteRequest deleteRequest = new DeleteRequest("user_test3", userId);
 		try {
 			searchClient.delete(deleteRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			LOG.error("ES Error handling deleting userId:{}", userId, e.getMessage());
 		}
 	}
@@ -90,25 +103,21 @@ public class UserRecService {
 		userRecQuery.setSeenIds(ids);
 		SearchRequest searchRequest = new SearchRequest("user_test"); 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-		BoolQueryBuilder qb = UserRecQueryBuilder.buildQuery(userRecQuery);
+		BoolQueryBuilder qb = UserRecBuilder.buildQuery(userRecQuery);
 		
 		searchSourceBuilder.query(qb); 
+		searchSourceBuilder.size(30);
+		searchSourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
 		searchRequest.source(searchSourceBuilder); 
+		
 		
 		try {
 			SearchResponse searchResponse = searchClient.search(searchRequest, RequestOptions.DEFAULT);
-			System.out.println(searchResponse);
+			LOG.info("Response", searchResponse);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error("ES Error handling querying user recommendation", e.getMessage());
 		}
 		
 	}
 	
-	
-	
-	
-	
-	
-
 }

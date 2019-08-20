@@ -1,13 +1,21 @@
 package com.dapp.outng.recommendations.builders;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
 
-import com.dapp.outng.recommendations.models.UserRecQuery;
+import com.dapp.outng.recommendations.models.userrec.UserElasticDoc;
+import com.dapp.outng.recommendations.models.userrec.UserRecQuery;
+import com.google.gson.Gson;
 
 import software.amazon.awssdk.utils.StringUtils;
 
-public class UserRecQueryBuilder {
+public class UserRecBuilder {
 
 	public static BoolQueryBuilder buildQuery(UserRecQuery userRecQuery) {
 
@@ -39,5 +47,19 @@ public class UserRecQueryBuilder {
 		return qb;
 
 	}
+	
+	public static void buildUserRecResponse(SearchResponse searchResponse) {	
+		List<SearchHit> searchHits = Arrays.asList(searchResponse.getHits().getHits());
+		List<UserElasticDoc> returnList = searchHits.stream().map(h -> convert(h)).collect(Collectors.toList());		
+	}
+
+	private static UserElasticDoc convert(SearchHit hit) {
+		Gson gson = new Gson();
+		UserElasticDoc doc = gson.fromJson(hit.getSourceAsString(), UserElasticDoc.class);
+//		doc.setUserId(hit.getId());
+		return doc;
+	}
+	
+		
 
 }

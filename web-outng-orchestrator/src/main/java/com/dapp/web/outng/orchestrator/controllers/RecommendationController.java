@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dapp.outng.recommendations.models.UserRecQuery;
+import com.dapp.outng.recommendations.models.userrec.UserRecQuery;
 import com.dapp.outng.recommendations.services.UserRecService;
 
 @RestController

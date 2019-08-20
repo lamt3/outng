@@ -88,6 +88,13 @@
 					<configuration>
 						<skipDockerBuild>true</skipDockerBuild>
 					</configuration>
+					<dependencies>
+                    <dependency>
+                        <groupId>javax.activation</groupId>
+                        <artifactId>activation</artifactId>
+                        <version>1.1.1</version>
+                    </dependency>
+                </dependencies>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>

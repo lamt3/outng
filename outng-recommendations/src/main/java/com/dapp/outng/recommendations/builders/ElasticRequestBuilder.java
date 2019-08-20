@@ -10,8 +10,8 @@ import org.elasticsearch.common.xcontent.XContentType;
 import com.dapp.outng.common.models.user.Location;
 import com.dapp.outng.common.models.user.OutngUser;
 import com.dapp.outng.common.models.user.UserDetail;
-import com.dapp.outng.recommendations.models.UserElasticDoc;
-import com.dapp.outng.recommendations.models.UserElasticDoc.SearchLocation;
+import com.dapp.outng.recommendations.models.userrec.UserElasticDoc;
+import com.dapp.outng.recommendations.models.userrec.UserElasticDoc.SearchLocation;
 import com.google.gson.Gson;
 
 public class ElasticRequestBuilder {

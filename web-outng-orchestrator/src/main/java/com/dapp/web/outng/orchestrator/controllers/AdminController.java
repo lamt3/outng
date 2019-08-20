@@ -22,9 +22,8 @@ import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.dapp.outng.common.db.OutngDynamoClient;
 import com.dapp.outng.common.models.user.OutngUser;
 import com.dapp.outng.common.utils.DateUtils;
-import com.dapp.outng.messaging.configs.OutngKafkaConfigs;
 import com.dapp.outng.profile.services.UserAccountService;
-import com.dapp.outng.recommendations.services.SearchCreationService;
+import com.dapp.outng.recommendations.services.UserRecService;
 
 
 
@@ -34,10 +33,10 @@ public class AdminController {
 
 	@Autowired
 	private OutngDynamoClient dynamoClient;
-	@Autowired
-	private SearchCreationService searchCreationService;
 	@Autowired 
 	private UserAccountService userService;
+	@Autowired
+	private UserRecService userRecService;
 	
 
 	protected AmazonDynamoDB client;
@@ -46,6 +45,11 @@ public class AdminController {
 	@PostConstruct
 	public void initialize() {
 		client = dynamoClient.getClientV1();
+	}
+	
+	@RequestMapping(value = "hi", method = { RequestMethod.GET }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+	public String addUser(HttpServletRequest httpRequest, HttpServletResponse response) {
+		return "hi";
 	}
 	
 	@RequestMapping(value = "user", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
@@ -77,7 +81,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "user/search_doc", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 	public String insert(HttpServletRequest httpRequest, HttpServletResponse response, @RequestBody String payload) {
-		searchCreationService.indexOutngUser(payload, "7619");
+		userRecService.indexOutngUser(payload, "7619");
 		return "Success";
 	}
 	

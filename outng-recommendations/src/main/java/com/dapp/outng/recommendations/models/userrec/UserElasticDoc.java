@@ -1,4 +1,4 @@
-package com.dapp.outng.recommendations.models;
+package com.dapp.outng.recommendations.models.userrec;
 
 import java.util.List;
 

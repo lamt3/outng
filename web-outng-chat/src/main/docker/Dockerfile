@@ -1,4 +1,4 @@
-FROM openjdk:8-jre
+FROM adoptopenjdk/openjdk11:latest
 VOLUME /tmp
 ADD web-outng-chat-1.0.0-SNAPSHOT.jar outng-chat-app.jar
 RUN sh -c 'touch /outng-chat-app.jar'
