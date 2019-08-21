@@ -4,6 +4,8 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.dapp.outng.common.db.OutngDynamoClient;
 import com.dapp.outng.common.models.user.OutngUser;
 import com.dapp.outng.common.utils.DateUtils;
+import com.dapp.outng.partner.fb.client.FBClient;
 import com.dapp.outng.profile.services.UserAccountService;
 import com.dapp.outng.recommendations.services.UserRecService;
 
@@ -30,6 +33,8 @@ import com.dapp.outng.recommendations.services.UserRecService;
 @RestController
 @RequestMapping("/api/v1/admin/")
 public class AdminController {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(AdminController.class);
 
 	@Autowired
 	private OutngDynamoClient dynamoClient;
@@ -69,13 +74,18 @@ public class AdminController {
 	
 	@RequestMapping(value = "user/table", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 	public String createTable2(HttpServletRequest httpRequest, HttpServletResponse response) {
-		DynamoDBMapper mapper = new DynamoDBMapper(client);
-		CreateTableRequest req = mapper.generateCreateTableRequest(OutngUser.class);
-		req.setProvisionedThroughput(new ProvisionedThroughput(5L, 5L));
-		req.getGlobalSecondaryIndexes().get(0).setProjection(new Projection().withProjectionType(ProjectionType.ALL));
-		req.getGlobalSecondaryIndexes().get(0).setProvisionedThroughput(new ProvisionedThroughput(5l, 5l));
-		client.createTable(req);
-		System.out.println("Creating Table");
+		try {
+			DynamoDBMapper mapper = new DynamoDBMapper(client);
+			CreateTableRequest req = mapper.generateCreateTableRequest(OutngUser.class);
+			req.setProvisionedThroughput(new ProvisionedThroughput(5L, 5L));
+			req.getGlobalSecondaryIndexes().get(0).setProjection(new Projection().withProjectionType(ProjectionType.ALL));
+			req.getGlobalSecondaryIndexes().get(0).setProvisionedThroughput(new ProvisionedThroughput(5l, 5l));
+			client.createTable(req);
+			LOG.info("Creating Table");
+		}catch(Exception e) {
+			LOG.error("ERROR:" , e);
+		}
+		
 		return "Success";
 	}
 	

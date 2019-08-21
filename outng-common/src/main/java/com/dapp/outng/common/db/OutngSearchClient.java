@@ -17,7 +17,7 @@ public class OutngSearchClient {
 	
 	@PostConstruct
 	public void initialize() {
-		this.client = new RestHighLevelClient(RestClient.builder(new HttpHost("localhost", 9200, "http")));
+		this.client = new RestHighLevelClient(RestClient.builder(new HttpHost("es01", 9200, "http")));
 	}
 	
 	public RestHighLevelClient getSearchClient() {

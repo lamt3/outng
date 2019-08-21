@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource(name = "props", value = "classpath:outng-kafka-${SPRING_PROFILES_ACTIVE}.properties", ignoreResourceNotFound = true)
+@PropertySource(name = "props", value = "classpath:outng-kafka.properties", ignoreResourceNotFound = true)
 @ConfigurationProperties(prefix = "kafka")
 public class OutngKafkaConfigs {
 
@@ -120,7 +120,7 @@ public class OutngKafkaConfigs {
 
 	public Properties getOutngProducerConfig() {
 		// BasicConfigurator.configure();
-		String servers = "127.0.0.1:9092";
+		String servers = this.servers;
 		Properties props = new Properties();
 		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, servers);
 		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");

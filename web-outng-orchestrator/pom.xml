@@ -24,6 +24,24 @@
 	</properties>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.yml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>**/*.properties</exclude>
+					<exclude>**/*.yml</exclude>
+				</excludes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -77,13 +95,9 @@
 					<version>11</version>
 					<showWarnings>true</showWarnings>
 				</configuration>
-				
+
 			</plugin>
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-pmd-plugin</artifactId> 
-				<configuration> <minimumTokens>50</minimumTokens> <targetJdk>${java.version}</targetJdk> 
-				<failOnViolation>true</failOnViolation> </configuration> <executions> <execution> 
-				<phase>verify</phase> <goals> <goal>cpd</goal> <goal>cpd-check</goal> </goals> 
-				</execution> </executions> </plugin> -->
+
 		</plugins>
 	</build>
 
