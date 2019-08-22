@@ -1,4 +1,4 @@
-package com.dapp.web.outng.orchestrator.delegates;
+package com.dapp.web.outng.orchestrator.auth.delegates;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

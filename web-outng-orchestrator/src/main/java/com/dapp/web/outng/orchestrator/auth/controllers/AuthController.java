@@ -1,4 +1,4 @@
-package com.dapp.web.outng.orchestrator.controllers;
+package com.dapp.web.outng.orchestrator.auth.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dapp.web.outng.orchestrator.delegates.AuthDelegate;
+import com.dapp.web.outng.orchestrator.auth.delegates.AuthDelegate;
 import com.dapp.web.outng.orchestrator.models.request.UserAuthRequest;
 import com.dapp.web.outng.orchestrator.models.responses.UserAuthResponse;
 
