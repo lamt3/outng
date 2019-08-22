@@ -1,4 +1,4 @@
-package com.dapp.web.outng.orchestrator.services.validator;
+package com.dapp.web.outng.orchestrator.auth.services.validator;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

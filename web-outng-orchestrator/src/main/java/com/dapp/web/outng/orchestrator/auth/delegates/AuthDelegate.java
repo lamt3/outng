@@ -1,7 +1,7 @@
 package com.dapp.web.outng.orchestrator.auth.delegates;
 
-import com.dapp.web.outng.orchestrator.models.request.UserAuthRequest;
-import com.dapp.web.outng.orchestrator.models.responses.UserAuthResponse;
+import com.dapp.web.outng.orchestrator.auth.models.request.UserAuthRequest;
+import com.dapp.web.outng.orchestrator.auth.models.responses.UserAuthResponse;
 
 public interface AuthDelegate {
 	

@@ -1,4 +1,4 @@
-package com.dapp.web.outng.orchestrator.models.request;
+package com.dapp.web.outng.orchestrator.auth.models.request;
 
 import lombok.Getter;
 import lombok.Setter;

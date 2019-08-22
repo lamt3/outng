@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dapp.web.outng.orchestrator.auth.delegates.AuthDelegate;
-import com.dapp.web.outng.orchestrator.models.request.UserAuthRequest;
-import com.dapp.web.outng.orchestrator.models.responses.UserAuthResponse;
+import com.dapp.web.outng.orchestrator.auth.models.request.UserAuthRequest;
+import com.dapp.web.outng.orchestrator.auth.models.responses.UserAuthResponse;
 
 @RestController
 @RequestMapping("/api/v1/auth")

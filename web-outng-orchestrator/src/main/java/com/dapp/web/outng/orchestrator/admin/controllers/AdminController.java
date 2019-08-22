@@ -1,4 +1,4 @@
-package com.dapp.web.outng.orchestrator.controllers;
+package com.dapp.web.outng.orchestrator.admin.controllers;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;

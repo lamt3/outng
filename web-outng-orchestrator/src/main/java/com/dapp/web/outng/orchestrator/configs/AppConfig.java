@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Import;
 
 import com.dapp.outng.messaging.configs.OutngKafkaConfigs;
 import com.dapp.outng.partner.fb.client.FBClientConfiguration;
-import com.dapp.web.outng.orchestrator.factories.UserValidatorFactory;
+import com.dapp.web.outng.orchestrator.auth.factories.UserValidatorFactory;
 
 @Configuration
 @ComponentScan({"com.dapp.outng"})

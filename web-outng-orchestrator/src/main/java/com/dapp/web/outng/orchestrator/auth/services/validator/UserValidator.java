@@ -1,4 +1,4 @@
-package com.dapp.web.outng.orchestrator.services.validator;
+package com.dapp.web.outng.orchestrator.auth.services.validator;
 
 import com.dapp.outng.partner.models.ValidUserResponse;
 

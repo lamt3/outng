@@ -1,4 +1,4 @@
-package com.dapp.web.outng.orchestrator.models.responses;
+package com.dapp.web.outng.orchestrator.auth.models.responses;
 
 import com.dapp.outng.common.models.response.BaseResponse;
 import com.dapp.outng.common.models.user.OutngUser;

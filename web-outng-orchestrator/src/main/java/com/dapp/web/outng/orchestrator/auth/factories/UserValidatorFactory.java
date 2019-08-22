@@ -1,10 +1,10 @@
-package com.dapp.web.outng.orchestrator.factories;
+package com.dapp.web.outng.orchestrator.auth.factories;
 
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.dapp.web.outng.orchestrator.services.validator.UserValidator;
+import com.dapp.web.outng.orchestrator.auth.services.validator.UserValidator;
 
 public class UserValidatorFactory {
 

@@ -1,4 +1,4 @@
-package com.dapp.web.outng.orchestrator.controllers;
+package com.dapp.web.outng.orchestrator.profile.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

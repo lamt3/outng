@@ -7,10 +7,10 @@ import com.dapp.outng.common.models.user.OutngUser;
 import com.dapp.outng.common.security.JwtTokenProvider;
 import com.dapp.outng.partner.models.ValidUserResponse;
 import com.dapp.outng.profile.services.UserAccountService;
-import com.dapp.web.outng.orchestrator.factories.UserValidatorFactory;
-import com.dapp.web.outng.orchestrator.models.request.UserAuthRequest;
-import com.dapp.web.outng.orchestrator.models.responses.UserAuthResponse;
-import com.dapp.web.outng.orchestrator.services.validator.UserValidator;
+import com.dapp.web.outng.orchestrator.auth.factories.UserValidatorFactory;
+import com.dapp.web.outng.orchestrator.auth.models.request.UserAuthRequest;
+import com.dapp.web.outng.orchestrator.auth.models.responses.UserAuthResponse;
+import com.dapp.web.outng.orchestrator.auth.services.validator.UserValidator;
 
 @Component
 public class AuthDelegateImpl implements AuthDelegate {
