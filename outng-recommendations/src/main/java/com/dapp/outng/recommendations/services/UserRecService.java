@@ -40,20 +40,11 @@ public class UserRecService {
 	
 	@Autowired
 	private OutngSearchClient outngSearchClient;
-	
-	@Autowired
-	private OutngDynamoClient dynamoClient;
-	
-	protected AmazonDynamoDB client;
-	protected DynamoDBMapper mapper ;
-	
 	private RestHighLevelClient searchClient;
 	
 	@PostConstruct
 	public void initialize() {
 		this.searchClient = outngSearchClient.getSearchClient();
-		this.client = dynamoClient.getClientV1();
-		mapper = new DynamoDBMapper(client);
 	}
 	
 	

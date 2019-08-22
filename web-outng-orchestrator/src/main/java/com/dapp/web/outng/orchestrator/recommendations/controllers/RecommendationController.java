@@ -1,4 +1,4 @@
-package com.dapp.web.outng.orchestrator.controllers;
+package com.dapp.web.outng.orchestrator.recommendations.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +22,8 @@ public class RecommendationController {
 	
 	@RequestMapping(value = "/users", method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 	public String getUserRecommendations(HttpServletRequest httpRequest, HttpServletResponse response, @RequestBody UserRecQuery userRecQuery) {
+		//get seen users and input into getUserRecs
+		
 		userRecService.getUserRecs(userRecQuery);
 		
 		

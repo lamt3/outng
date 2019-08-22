@@ -23,14 +23,14 @@ import com.dapp.outng.common.utils.DateUtils;
 public class UserAccountService {
 
 	@Autowired
-	private OutngDynamoClient dynamoClient;
+	private OutngDynamoClient outngDynamoClient;
 
 	protected AmazonDynamoDB client;
 	protected DynamoDBMapper mapper ;
 
 	@PostConstruct
 	public void initialize() {
-		this.client = dynamoClient.getClientV1();
+		this.client = outngDynamoClient.getClientV1();
 		mapper = new DynamoDBMapper(client);
 
 	}

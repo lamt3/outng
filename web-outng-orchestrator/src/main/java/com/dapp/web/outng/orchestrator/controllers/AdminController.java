@@ -73,7 +73,24 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "user/table", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
-	public String createTable2(HttpServletRequest httpRequest, HttpServletResponse response) {
+	public String createUserTable(HttpServletRequest httpRequest, HttpServletResponse response) {
+		try {
+			DynamoDBMapper mapper = new DynamoDBMapper(client);
+			CreateTableRequest req = mapper.generateCreateTableRequest(OutngUser.class);
+			req.setProvisionedThroughput(new ProvisionedThroughput(5L, 5L));
+			req.getGlobalSecondaryIndexes().get(0).setProjection(new Projection().withProjectionType(ProjectionType.ALL));
+			req.getGlobalSecondaryIndexes().get(0).setProvisionedThroughput(new ProvisionedThroughput(5l, 5l));
+			client.createTable(req);
+			LOG.info("Creating Table");
+		}catch(Exception e) {
+			LOG.error("ERROR:" , e);
+		}
+		
+		return "Success";
+	}
+	
+	@RequestMapping(value = "userseen/table", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+	public String createUserSeenTable(HttpServletRequest httpRequest, HttpServletResponse response) {
 		try {
 			DynamoDBMapper mapper = new DynamoDBMapper(client);
 			CreateTableRequest req = mapper.generateCreateTableRequest(OutngUser.class);

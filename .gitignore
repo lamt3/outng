@@ -41,3 +41,6 @@ secrets.yml
 .gradletasknamecache
 .sts4-cache
 zk-single-kafka-single
+/web-outng-async/src/main/docker/Dockerfile
+/web-outng-chat/src/main/docker/Dockerfile
+/web-outng-orchestrator/src/main/docker/Dockerfile

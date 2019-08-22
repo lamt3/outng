@@ -31,7 +31,7 @@ public class OutngDynamoClient {
 		DynamoDbAsyncClient client = DynamoDbAsyncClient.builder().endpointOverride(URI.create("http://localhost:8000")).build();
 
 		AmazonDynamoDB amazonDynamoDB = AmazonDynamoDBClientBuilder.standard()
-				.withEndpointConfiguration(new EndpointConfiguration("http://dynamo:8000", "us-west-2")).build();
+				.withEndpointConfiguration(new EndpointConfiguration("http://localhost:8000", "us-west-2")).build();
 
 		this.dynamoDbClient = client;
 		this.dynamoDbClientV1 = amazonDynamoDB;
