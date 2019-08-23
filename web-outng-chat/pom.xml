@@ -20,7 +20,7 @@
 		<debug.port>8087</debug.port>
 		<debug.suspend>n</debug.suspend>
 		<docker.image.prefix>outng/outng-chat-image</docker.image.prefix>
-		<jedis>2.9.0</jedis>
+		
 
 	</properties>
 
@@ -127,16 +127,7 @@
 		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-amqp</artifactId> 
 			</dependency> <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-reactor-netty</artifactId> 
 			</dependency> -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-			<version>${jedis}</version>
-		</dependency>
-
+		
 
 	</dependencies>
 </project>

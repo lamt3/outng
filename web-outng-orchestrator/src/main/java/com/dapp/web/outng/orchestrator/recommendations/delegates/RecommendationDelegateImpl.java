@@ -3,17 +3,18 @@ package com.dapp.web.outng.orchestrator.recommendations.delegates;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.dapp.outng.common.models.actions.OutngAction;
 import com.dapp.outng.common.models.actions.OutngActionBuilder;
 import com.dapp.outng.common.utils.JsonUtils;
 import com.dapp.outng.messaging.producers.MessageProducer;
 import com.dapp.outng.profile.services.UserSeenService;
-import com.dapp.outng.recommendations.models.userrec.UserElasticDoc;
 import com.dapp.outng.recommendations.models.userrec.UserRecQuery;
 import com.dapp.outng.recommendations.models.userrec.UserRecResponse;
 import com.dapp.outng.recommendations.services.UserRecService;
 
+@Component
 public class RecommendationDelegateImpl {
 	@Autowired
 	private UserSeenService userSeenService;

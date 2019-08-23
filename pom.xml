@@ -43,6 +43,7 @@
 		<lombok.version>1.18.8</lombok.version>
 		<apache.commons.version>3.9</apache.commons.version>
 		<elastic.version>7.2.0</elastic.version>
+		<jedis>2.9.0</jedis>
 	</properties>
 
 
@@ -151,6 +152,17 @@
 			<artifactId>elasticsearch</artifactId>
 			<version>${elastic.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${jedis}</version>
+		</dependency>
+		
 
 		<dependency>
 			<groupId>com.amazonaws</groupId>

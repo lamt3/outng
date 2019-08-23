@@ -3,6 +3,19 @@ spring:
     include:
       - partnerSecrets
     active: dev
+  redis:
+      cluster:
+        nodes: localhost:6379
+        max-redirects: 6
+      timeout: 300000
+      jedis:
+        pool:
+          max-active: 8
+          max-wait: 100000
+          max-idle: 8
+          min-idle: 0
+      message:
+        topic-name: topic-test
 
   
 jwt-configs:

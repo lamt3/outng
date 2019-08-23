@@ -1,28 +1,21 @@
-package com.dapp.web.outng.chat.configs;
+package com.dapp.outng.common.configs;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.listener.PatternTopic;
-import org.springframework.data.redis.listener.RedisMessageListenerContainer;
-import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
-import com.dapp.web.outng.chat.receiver.RedisReceiver;
 
 import redis.clients.jedis.JedisCluster;
 
 @Configuration
 @ConditionalOnClass({ JedisCluster.class })
-public class RedisConfig {
+public class RedisCommonConfig {
 
 	@Value("${spring.redis.timeout}")
 	private String timeOut;
@@ -48,27 +41,19 @@ public class RedisConfig {
 	@Value("${spring.redis.message.topic-name}")
 	private String topicName;
 
-	@Bean
-	RedisReceiver receiver() {
-		return new RedisReceiver();
-	}
+	
 
-	@Bean("chatMessageListenerAdapter")
-	MessageListenerAdapter chatMessageListenerAdapter(RedisReceiver redisReceiver) {
-		return new MessageListenerAdapter(redisReceiver, "receiveMessage");
-	}
-
-	@Bean
-	RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory, @Qualifier("chatMessageListenerAdapter") MessageListenerAdapter chatMessageListenerAdapter) {
-		System.out.println(connectionFactory.getConnection().getClientName());
-		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-//		ExecutorService executorService = Executors.newFixedThreadPool(2);
-//		container.setTaskExecutor(executorService);
-		container.setConnectionFactory(connectionFactory);
-		container.addMessageListener(chatMessageListenerAdapter, new PatternTopic("chat"));
-		container.afterPropertiesSet();
-		return container;
-	}
+//	@Bean
+//	RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory, @Qualifier("chatMessageListenerAdapter") MessageListenerAdapter chatMessageListenerAdapter) {
+//		System.out.println(connectionFactory.getConnection().getClientName());
+//		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+////		ExecutorService executorService = Executors.newFixedThreadPool(2);
+////		container.setTaskExecutor(executorService);
+//		container.setConnectionFactory(connectionFactory);
+//		container.addMessageListener(chatMessageListenerAdapter, new PatternTopic("chat"));
+//		container.afterPropertiesSet();
+//		return container;
+//	}
 
 	@Bean
 	protected JedisConnectionFactory jedisConnectionFactory() {
