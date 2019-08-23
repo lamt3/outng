@@ -22,7 +22,7 @@ public class RecommendationDelegateImpl {
 	@Autowired
 	private MessageProducer messageProducer;
 
-	public List<UserElasticDoc> getUsers(String userId, UserRecQuery userRecQuery) {
+	public UserRecResponse getUserRecs(String userId, UserRecQuery userRecQuery) {
 
 		List<String> seenUserIds = userSeenService.getSeenUsers(userId);
 		if(seenUserIds != null) {
@@ -32,7 +32,7 @@ public class RecommendationDelegateImpl {
 		
 		sendMessage(userId, userRecResponse);
 		
-		return userRecResponse.getRecommendedUsers();
+		return userRecResponse;
 	}
 	
 	private void sendMessage(String userId, UserRecResponse userRecResponse) {
