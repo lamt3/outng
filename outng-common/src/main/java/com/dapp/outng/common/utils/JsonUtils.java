@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.gson.Gson;
 
 public class JsonUtils {
 	protected static final ObjectMapper objectMapper = new ObjectMapper();
@@ -68,6 +69,16 @@ public class JsonUtils {
 		}
 
 		return instance;
+	}
+	
+	public static final <T> String toJson(T object) {
+		Gson gson = new Gson();
+		return gson.toJson(object);
+	}
+	
+	public static final <T> T toObject(String json, Class<T> type) {
+		Gson gson = new Gson();
+		return gson.fromJson(json, type);
 	}
 
 }
