@@ -23,8 +23,6 @@ public class AsyncEventConsumer extends AbstractQueueConsumer {
 		OutngAction action = gson.fromJson(value, OutngAction.class);
 		ActionHandler actionHandler = ActionHandlerFactory.getActionHandler(action.getActionType());
 		actionHandler.processMessage(action);
-		
-		
 	}
 
 	

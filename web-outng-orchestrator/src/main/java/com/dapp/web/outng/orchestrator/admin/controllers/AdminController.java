@@ -23,8 +23,8 @@ import com.amazonaws.services.dynamodbv2.model.ProjectionType;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.dapp.outng.common.db.OutngDynamoClient;
 import com.dapp.outng.common.models.user.OutngUser;
+import com.dapp.outng.common.models.user.SeenUsers;
 import com.dapp.outng.common.utils.DateUtils;
-import com.dapp.outng.partner.fb.client.FBClient;
 import com.dapp.outng.profile.services.UserAccountService;
 import com.dapp.outng.recommendations.services.UserRecService;
 
@@ -81,29 +81,27 @@ public class AdminController {
 			req.getGlobalSecondaryIndexes().get(0).setProjection(new Projection().withProjectionType(ProjectionType.ALL));
 			req.getGlobalSecondaryIndexes().get(0).setProvisionedThroughput(new ProvisionedThroughput(5l, 5l));
 			client.createTable(req);
-			LOG.info("Creating Table");
+			LOG.info("Creating User Table");
 		}catch(Exception e) {
 			LOG.error("ERROR:" , e);
 		}
 		
-		return "Success";
+		return "Success Creating User Table";
 	}
 	
 	@RequestMapping(value = "userseen/table", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 	public String createUserSeenTable(HttpServletRequest httpRequest, HttpServletResponse response) {
 		try {
 			DynamoDBMapper mapper = new DynamoDBMapper(client);
-			CreateTableRequest req = mapper.generateCreateTableRequest(OutngUser.class);
+			CreateTableRequest req = mapper.generateCreateTableRequest(SeenUsers.class);
 			req.setProvisionedThroughput(new ProvisionedThroughput(5L, 5L));
-			req.getGlobalSecondaryIndexes().get(0).setProjection(new Projection().withProjectionType(ProjectionType.ALL));
-			req.getGlobalSecondaryIndexes().get(0).setProvisionedThroughput(new ProvisionedThroughput(5l, 5l));
 			client.createTable(req);
-			LOG.info("Creating Table");
+			LOG.info("Creating Table- Seen Users");
 		}catch(Exception e) {
 			LOG.error("ERROR:" , e);
 		}
 		
-		return "Success";
+		return "Success Creating Seen Users Table";
 	}
 	
 	@RequestMapping(value = "user/search_doc", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")

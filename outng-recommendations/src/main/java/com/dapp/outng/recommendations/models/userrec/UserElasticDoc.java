@@ -19,6 +19,7 @@ import lombok.Setter;
 @JsonInclude(Include.NON_NULL)
 public class UserElasticDoc {
 	
+	private String userId;
 	private String name;
 	private String gender;
 	private Integer age;

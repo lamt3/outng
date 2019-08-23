@@ -52,7 +52,7 @@ public class ElasticRequestBuilder {
 		
 		SearchLocation searchLoc = new SearchLocation(Optional.of(outngUser.getLocation()).map(Location::getLatitude).orElse(null), 
 				Optional.of(outngUser.getLocation()).map(Location::getLongitude).orElse(null));
-		return  new UserElasticDoc(outngUser.getName(), 
+		return  new UserElasticDoc(outngUser.getUserId(), outngUser.getName(), 
 				uOp.map(UserDetail::getGender).orElse(null), 
 				StringUtils.isBlank(outngUser.getAge()) ? null : Integer.valueOf(outngUser.getAge()), 
 				uOp.map(UserDetail::getSituation).orElse(null), 
