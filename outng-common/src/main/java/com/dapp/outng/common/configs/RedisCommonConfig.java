@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -55,7 +56,7 @@ public class RedisCommonConfig {
 //		return container;
 //	}
 
-	@Bean
+	@Bean("jedisConnectionFactory")
 	protected JedisConnectionFactory jedisConnectionFactory() {
 		RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration("localhost", 6379);
 		JedisClientConfiguration jedisClientConfiguration = JedisClientConfiguration.builder().usePooling().build();
@@ -65,6 +66,7 @@ public class RedisCommonConfig {
 	}
 
 	@Bean
+	@DependsOn("jedisConnectionFactory")
 	public RedisTemplate<String, Object> redisTemplate() {
 		final RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
 		redisTemplate.setKeySerializer(new StringRedisSerializer());

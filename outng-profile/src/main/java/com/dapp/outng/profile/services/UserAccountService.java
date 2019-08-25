@@ -63,7 +63,10 @@ public class UserAccountService {
 		if (user == null) {
 			return null;
 		}
-		user.setAge(DateUtils.getAge(user.getBirthDate()));
+		if(user.getBirthDate() != null) {
+			user.setAge(DateUtils.getAge(user.getBirthDate()));
+		}
+		
 		return user;
 	}
 	
