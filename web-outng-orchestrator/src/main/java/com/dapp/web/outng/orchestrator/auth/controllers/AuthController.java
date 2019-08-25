@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +37,9 @@ public class AuthController {
 	@RequestMapping(value = "/user", method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 	public ResponseEntity<UserAuthResponse> authorizeUser(HttpServletRequest httpRequest, HttpServletResponse response, @RequestBody UserAuthRequest userAuthRequest) {
 		UserAuthResponse userAuthResponse = authDelegate.authorizeUserAndGenerateJWT(userAuthRequest);
+		if(userAuthResponse.isError()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userAuthResponse);
+		}
 		return ResponseEntity.ok().body(userAuthResponse);
 	}
 	

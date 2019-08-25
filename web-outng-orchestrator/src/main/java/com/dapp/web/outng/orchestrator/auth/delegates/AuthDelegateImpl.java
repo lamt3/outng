@@ -42,7 +42,8 @@ public class AuthDelegateImpl implements AuthDelegate {
 			userAuthResponse.setJwtToken(jwt);
 			
 		}else {
-			
+			userAuthResponse.setError(true);
+			userAuthResponse.setErrorMessage("Not Valid User for User Access Token: " + userAuthRequest.getUserAccessToken());
 		}
 
 		return userAuthResponse;

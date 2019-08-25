@@ -10,5 +10,6 @@ import lombok.Setter;
 public class FBUserAuthResponse {
 	
 	private FBData data;
+	private FBError error;
 
 }

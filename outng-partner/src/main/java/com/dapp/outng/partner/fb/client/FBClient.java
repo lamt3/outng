@@ -53,6 +53,10 @@ public class FBClient {
 		ValidUserResponse resp = null;
 		try {
 			FBUserAuthResponse fbUserAuthResponse = gson.fromJson(r, FBUserAuthResponse.class);
+			if(fbUserAuthResponse.getError() != null) {
+				// TO DO - BETTER ERROR HANDLING => https://developers.facebook.com/docs/graph-api/using-graph-api/error-handling/
+				return null;
+			}
 			if(fbUserAuthResponse != null && fbUserAuthResponse.getData() != null && StringUtils.isNotBlank(fbUserAuthResponse.getData().getUser_id())) {
 				resp = new ValidUserResponse(true, "FB", fbUserAuthResponse.getData().getUser_id());
 			}

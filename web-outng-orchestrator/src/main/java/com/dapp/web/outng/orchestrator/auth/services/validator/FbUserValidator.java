@@ -17,7 +17,6 @@ public class FbUserValidator implements UserValidator {
 
 		String appAccessToken = fbClient.getAppAccessToken();
 		ValidUserResponse validUser = null;
-
 		
 		if (StringUtils.isNotBlank(appAccessToken)) {
 			validUser = fbClient.verifyFBUser(appAccessToken, userAuthToken);

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,9 +58,9 @@ public class ProfileController {
 	}
 
 	@PutMapping("/profile")
-	public String editUser(HttpServletRequest httpRequest, HttpServletResponse response,  Principal principal, @RequestBody OutngUser user) {
+	public String editUser(HttpServletRequest httpRequest, HttpServletResponse response, Principal principal,
+			@RequestBody OutngUser user) {
 		String userId = "abc";
-		
 
 		userAccountService.updateUserInfo(user);
 

@@ -14,7 +14,7 @@ public class BaseResponse {
 	
 	public BaseResponse() {
 		this.error = false;
-		this.errorMessage = "No Error";
+		this.errorMessage = null;
 	}
 
 }
