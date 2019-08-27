@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/v1/admin")
 public class AdminController {
 	
-	@RequestMapping(value = "hi", method = { RequestMethod.GET }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+	@RequestMapping(value = "/hi", method = { RequestMethod.GET }, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 	public String heartBeat(HttpServletRequest httpRequest, HttpServletResponse response) {
+		System.out.println("Async HI");
 		return "hi";
 	}
 

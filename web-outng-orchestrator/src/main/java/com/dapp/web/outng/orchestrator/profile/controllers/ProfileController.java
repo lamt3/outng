@@ -1,17 +1,19 @@
 package com.dapp.web.outng.orchestrator.profile.controllers;
 
 import java.security.Principal;
+import java.util.concurrent.CompletableFuture;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.dapp.outng.common.models.actions.ActionTypes;
 import com.dapp.outng.common.models.actions.OutngAction;
@@ -28,6 +30,9 @@ public class ProfileController {
 	private UserAccountService userAccountService;
 	@Autowired
 	private MessageProducer messageProducer;
+	@Autowired
+	@Qualifier("serviceRestTemplate")
+	private RestTemplate restTemplate;
 
 //	@RequestMapping(value = "/signup", method = {RequestMethod.PUT}, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 	@PutMapping("/signup")
@@ -41,8 +46,8 @@ public class ProfileController {
 		action.setActionType(ActionTypes.CREATE_USER_ACION);
 		action.setOutngUser(user);
 		String payload = gson.toJson(action);
-
-		messageProducer.sendMessage("outng-async-topic", user.getUserId(), payload);
+		
+		CompletableFuture.runAsync(() -> messageProducer.sendMessage("outng-async-topic", user.getUserId(), payload));
 
 		return "Success";
 
@@ -56,6 +61,19 @@ public class ProfileController {
 		return "Success";
 
 	}
+	
+	@GetMapping("/test")
+	public String testUser(HttpServletRequest httpRequest, HttpServletResponse response, Principal principal) {
+		CompletableFuture.runAsync(() -> {
+			System.out.println("Executing rest client...");
+			String url = "http://localhost:8088/api/v1/admin/hi";
+			restTemplate.getForEntity(url, String.class);
+		});
+
+		return "Success";
+
+	}
+	
 
 	@PutMapping("/profile")
 	public String editUser(HttpServletRequest httpRequest, HttpServletResponse response, Principal principal,
