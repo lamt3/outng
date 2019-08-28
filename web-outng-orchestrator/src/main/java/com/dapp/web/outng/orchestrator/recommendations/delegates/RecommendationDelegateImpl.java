@@ -5,10 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.dapp.outng.common.models.actions.OutngAction;
-import com.dapp.outng.common.models.actions.OutngActionBuilder;
-import com.dapp.outng.common.utils.JsonUtils;
-import com.dapp.outng.messaging.producers.MessageProducer;
 import com.dapp.outng.profile.services.UserSeenService;
 import com.dapp.outng.recommendations.models.userrec.UserRecQuery;
 import com.dapp.outng.recommendations.models.userrec.UserRecResponse;
@@ -20,8 +16,8 @@ public class RecommendationDelegateImpl {
 	private UserSeenService userSeenService;
 	@Autowired
 	private UserRecService userRecService; 
-	@Autowired
-	private MessageProducer messageProducer;
+//	@Autowired
+//	private MessageProducer messageProducer;
 
 	public UserRecResponse getUserRecs(String userId, UserRecQuery userRecQuery) {
 
@@ -31,18 +27,18 @@ public class RecommendationDelegateImpl {
 		}
 		UserRecResponse userRecResponse = userRecService.getUserRecs(userRecQuery);
 		
-		sendMessage(userId, userRecResponse);
+//		sendMessage(userId, userRecResponse);
 		
 		return userRecResponse;
 	}
 	
-	private void sendMessage(String userId, UserRecResponse userRecResponse) {
-		if(userRecResponse != null && userRecResponse.getSeenIds() != null && userRecResponse.getSeenIds().size() > 0) {
-			OutngAction seenUsersAction = OutngActionBuilder.buildSeenUsersAction(userId, userRecResponse.getSeenIds());
-			String payload = JsonUtils.toJson(seenUsersAction);
-			messageProducer.sendMessage("outng-async-topic", userId, payload);
-		}
-		
-	}
+//	private void sendMessage(String userId, UserRecResponse userRecResponse) {
+//		if(userRecResponse != null && userRecResponse.getSeenIds() != null && userRecResponse.getSeenIds().size() > 0) {
+//			OutngAction seenUsersAction = OutngActionBuilder.buildSeenUsersAction(userId, userRecResponse.getSeenIds());
+//			String payload = JsonUtils.toJson(seenUsersAction);
+//			messageProducer.sendMessage("outng-async-topic", userId, payload);
+//		}
+//		
+//	}
 
 }

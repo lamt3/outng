@@ -15,6 +15,8 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.indices.CreateIndexRequest;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -46,6 +48,24 @@ public class UserRecService {
 	@PostConstruct
 	public void initialize() {
 		this.searchClient = outngSearchClient.getSearchClient();
+	}
+	
+	public void createUserIndexRequest() {
+		CreateIndexRequest request = new CreateIndexRequest("user_test");
+		request.settings(Settings.builder().put("index.number_of_shards", 1));
+		String json = "\"properties\": {\n" + 
+				"				\"name\": { \"type\": \"text\" },\n" + 
+				"				\"userId\": { \"type\": \"keyword\" },\n" + 
+				"				\"age\": {\"type\":\"integer\"},\n" + 
+				"				\"height\": {\"type\":\"integer\"},\n" + 
+				"				\"ethnicity\": {\"type\":\"keyword\"},\n" + 
+				"				\"gender\": {\"type\":\"keyword\"},\n" + 
+				"				\"lastLoginDate\": {\"type\":\"date\"},\n" + 
+				"				\"interests\": {\"type\":\"keyword\"},	\n" + 
+				"				\"situation\": {\"type\":\"keyword\"},\n" + 
+				"				\"location\": {\"type\":\"geo_point\"}\n" + 
+				"				}";
+		
 	}
 
 	public void indexOutngUser(String userPayload, String userId) {

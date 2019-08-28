@@ -123,11 +123,11 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.dapp</groupId>
 			<artifactId>outng-messaging</artifactId>
 			<version>${project.version}</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>com.dapp</groupId>

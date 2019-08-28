@@ -18,7 +18,7 @@ public class ElasticRequestBuilder {
 
 	public static IndexRequest buildUserIndexRequest(OutngUser outngUser) {
 		
-		IndexRequest request = new IndexRequest("user_test3"); 
+		IndexRequest request = new IndexRequest("user_test"); 
 		request.id(outngUser.getUserId());
 		UserElasticDoc userDoc = buildUserElasticDoc(outngUser);
 		

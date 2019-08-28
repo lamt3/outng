@@ -18,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
 import com.dapp.outng.common.models.actions.ActionTypes;
 import com.dapp.outng.common.models.actions.OutngAction;
 import com.dapp.outng.common.models.user.OutngUser;
-import com.dapp.outng.messaging.producers.MessageProducer;
 import com.dapp.outng.profile.services.UserAccountService;
 import com.google.gson.Gson;
 
@@ -28,13 +27,12 @@ public class ProfileController {
 
 	@Autowired
 	private UserAccountService userAccountService;
-	@Autowired
-	private MessageProducer messageProducer;
+//	@Autowired
+//	private MessageProducer messageProducer;
 	@Autowired
 	@Qualifier("serviceRestTemplate")
 	private RestTemplate restTemplate;
 
-//	@RequestMapping(value = "/signup", method = {RequestMethod.PUT}, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 	@PutMapping("/signup")
 	public String signUpUser(HttpServletRequest httpRequest, HttpServletResponse response,
 			@RequestBody OutngUser user) {
@@ -47,7 +45,7 @@ public class ProfileController {
 		action.setOutngUser(user);
 		String payload = gson.toJson(action);
 		
-		CompletableFuture.runAsync(() -> messageProducer.sendMessage("outng-async-topic", user.getUserId(), payload));
+//		CompletableFuture.runAsync(() -> messageProducer.sendMessage("outng-async-topic", user.getUserId(), payload));
 
 		return "Success";
 
@@ -88,7 +86,7 @@ public class ProfileController {
 		action.setOutngUser(user);
 		String payload = gson.toJson(action);
 
-		messageProducer.sendMessage("outng-async-topic", user.getUserId(), payload);
+//		messageProducer.sendMessage("outng-async-topic", user.getUserId(), payload);
 
 		return "Success";
 
