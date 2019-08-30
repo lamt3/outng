@@ -18,7 +18,6 @@ import com.dapp.outng.common.security.JwtTokenProvider;
 import com.dapp.web.outng.chat.services.RedisService;
 
 import lombok.RequiredArgsConstructor;
-import software.amazon.awssdk.utils.StringUtils;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
