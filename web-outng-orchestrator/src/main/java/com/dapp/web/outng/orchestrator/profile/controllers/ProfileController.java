@@ -39,12 +39,6 @@ public class ProfileController {
 
 		userAccountService.updateUserInfo(user);
 
-		Gson gson = new Gson();
-		OutngAction action = new OutngAction();
-		action.setActionType(ActionTypes.CREATE_USER_ACION);
-		action.setOutngUser(user);
-		String payload = gson.toJson(action);
-		
 //		CompletableFuture.runAsync(() -> messageProducer.sendMessage("outng-async-topic", user.getUserId(), payload));
 
 		return "Success";

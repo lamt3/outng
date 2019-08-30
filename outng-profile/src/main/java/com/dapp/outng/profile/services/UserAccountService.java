@@ -1,10 +1,6 @@
 package com.dapp.outng.profile.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -21,30 +17,34 @@ public class UserAccountService {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	
-	public void getRecommendations() {
+
+	
+	public OutngUser getUserByUserPartnerId(String partnerUserId) {
+		
 		Query query = new Query();
-		query.addCriteria(Criteria.where("lookingFor.gender").is("m"));
+		query.addCriteria(Criteria.where("partnerUserId").is(partnerUserId));
+		OutngUser user = null;
+		user = mongoTemplate.findOne(query, OutngUser.class, "OutngUserMale");
+		if(user == null) {
+			user = mongoTemplate.findOne(query, OutngUser.class, "OutngUserFemale");
+		}
+		
+		return user;
+	}
 
-		query.addCriteria(Criteria.where("location").near(new Point(37, 120)).maxDistance(100));
-		query.addCriteria(Criteria.where("userDetail.age").gte(20).lte(30));
-		List<String> seenUsers = new ArrayList<String>();
-		query.addCriteria(Criteria.where("_id").nin(seenUsers));
-		List<String> situation = new ArrayList<>();
-		query.addCriteria(Criteria.where("userDetail.situation").in(situation));
-		
-		mongoTemplate.find(query, OutngUser.class, "maleOutngUser");
-		
 	
+	public OutngUser createNewUser(OutngUser newUser) {
+		
+		return null;	
 	}
 	
-	public OutngUser getUserByUserPartnerId(String partnerId) {
-		
+	public OutngUser updateUserInfo(OutngUser updateUser) {
 		return null;
-		
 	}
-
 
 	
 	
 
 }
+
+

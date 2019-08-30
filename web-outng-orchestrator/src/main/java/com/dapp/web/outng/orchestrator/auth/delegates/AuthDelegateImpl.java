@@ -32,7 +32,6 @@ public class AuthDelegateImpl implements AuthDelegate {
 			OutngUser outngUser = userAccountService.getUserByUserPartnerId(validUser.getClientUserId());
 			
 			if (outngUser == null) {
-				outngUser = userAccountService.createNewUser(validUser.getClientUserId(), validUser.getUserType());
 				userAuthResponse.setNewUser(true);
 			}
 			
