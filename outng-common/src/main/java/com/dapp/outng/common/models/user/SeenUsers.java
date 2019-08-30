@@ -2,9 +2,9 @@ package com.dapp.outng.common.models.user;
 
 import java.util.List;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -14,10 +14,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude(Include.NON_NULL)
-@DynamoDBTable(tableName = "Seen_Users")
+@Document(collection = "Seen_Users")
 public class SeenUsers {
-	@DynamoDBHashKey(attributeName = "userId")
+	@Id
 	private String userId;
-	@DynamoDBAttribute(attributeName = "seenUserIds")
 	private List<String> seenUserIds;
 }

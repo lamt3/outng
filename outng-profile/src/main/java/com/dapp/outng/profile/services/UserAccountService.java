@@ -1,97 +1,49 @@
 package com.dapp.outng.profile.services;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
-
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.Point;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.dapp.outng.common.db.OutngDynamoClient;
 import com.dapp.outng.common.models.user.OutngUser;
-import com.dapp.outng.common.utils.DateUtils;
+
+
+
 
 @Component
 public class UserAccountService {
-
+	
 	@Autowired
-	private OutngDynamoClient outngDynamoClient;
+	private MongoTemplate mongoTemplate;
+	
+	public void getRecommendations() {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("lookingFor.gender").is("m"));
 
-	protected AmazonDynamoDB client;
-	protected DynamoDBMapper mapper ;
-
-	@PostConstruct
-	public void initialize() {
-		this.client = outngDynamoClient.getClientV1();
-		mapper = new DynamoDBMapper(client);
-
-	}
-
-	/*
-	 * @Param String clientId 
-	 * clientId can be FB Id or Phone Id (Phone Login)
-	 */
-	public OutngUser getUserByUserPartnerId(String userPartnerId) {
-		Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
-		eav.put(":v1",  new AttributeValue().withS(userPartnerId));
+		query.addCriteria(Criteria.where("location").near(new Point(37, 120)).maxDistance(100));
+		query.addCriteria(Criteria.where("userDetail.age").gte(20).lte(30));
+		List<String> seenUsers = new ArrayList<String>();
+		query.addCriteria(Criteria.where("_id").nin(seenUsers));
+		List<String> situation = new ArrayList<>();
+		query.addCriteria(Criteria.where("userDetail.situation").in(situation));
 		
-		Map<String, String> ean = new HashMap<String, String>();
-		ean.put("#name",  "name");
-		ean.put("#location", "location");
+		mongoTemplate.find(query, OutngUser.class, "maleOutngUser");
 		
-		DynamoDBQueryExpression<OutngUser> queryExpression = new DynamoDBQueryExpression<OutngUser>()
-				.withIndexName("partnerUserId").withConsistentRead(false)
-				.withProjectionExpression("userId, userDetail, #location, #name")
-				.withExpressionAttributeNames(ean)
-				.withKeyConditionExpression("partnerUserId = :v1")
-				.withExpressionAttributeValues(eav);
-		
-		PaginatedQueryList<OutngUser> user = mapper.query(OutngUser.class, queryExpression);
-		return CollectionUtils.isEmpty(user) ? null : user.get(0);
+	
 	}
 	
-	public OutngUser getUser(String userId) {
-		OutngUser user = mapper.load(OutngUser.class, userId);
-		if (user == null) {
-			return null;
-		}
-		if(user.getBirthDate() != null) {
-			user.setAge(DateUtils.getAge(user.getBirthDate()));
-		}
+	public OutngUser getUserByUserPartnerId(String partnerId) {
 		
-		return user;
+		return null;
+		
 	}
-	
-	public OutngUser updateUserInfo(OutngUser userUpdate) {
-		DynamoDBMapperConfig dynamoDBMapperConfig = new DynamoDBMapperConfig.Builder()
-				  .withConsistentReads(DynamoDBMapperConfig.ConsistentReads.CONSISTENT)
-				  .withSaveBehavior(DynamoDBMapperConfig.SaveBehavior.UPDATE_SKIP_NULL_ATTRIBUTES)
-				  .build();
-		mapper.save(userUpdate, dynamoDBMapperConfig);
-		return userUpdate;
 
-	}
-	
-	public OutngUser saveUser(OutngUser outngUser) {
-		mapper.save(outngUser);
-		return outngUser;
-	}
-	
-	public OutngUser createNewUser(String partnerUserId, String partnerType) {
-		OutngUser newUser = new OutngUser();
-		newUser.setPartnerUserId(partnerUserId);
-		newUser.setPartnerUserType(partnerType);
-		mapper.save(newUser);
-		return newUser;
-	}
+
 	
 	
 

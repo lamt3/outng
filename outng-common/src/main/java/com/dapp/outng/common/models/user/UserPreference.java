@@ -12,7 +12,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
-@DynamoDBDocument
 public class UserPreference {
 	private String lookingFor;
 	private int distanceFilter;
