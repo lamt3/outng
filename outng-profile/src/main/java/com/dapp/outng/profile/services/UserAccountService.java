@@ -32,6 +32,9 @@ public class UserAccountService {
 		return user;
 	}
 
+	public OutngUser getUser(String userId) {
+		return null;
+	}
 	
 	public OutngUser createNewUser(OutngUser newUser) {
 		
